@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6803194124430D2900320C84 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6803194024430D2900320C84 /* Default-568h@2x.png */; };
 		B8716EED20D0D9B600ACE7D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */; };
 		B8716EEF20D0D9B600ACE7D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */; };
 		B8716EF220D0D9B600ACE7D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8716EF020D0D9B600ACE7D3 /* Main.storyboard */; };
@@ -15,7 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B8716EE920D0D9B600ACE7D3 /* Swift Fun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Fun.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6803194024430D2900320C84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B8716EE920D0D9B600ACE7D3 /* CrossStitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrossStitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B8716EF120D0D9B600ACE7D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +40,8 @@
 		B8716EE020D0D9B600ACE7D3 = {
 			isa = PBXGroup;
 			children = (
-				B8716EEB20D0D9B600ACE7D3 /* Swift Fun */,
+				6803194024430D2900320C84 /* Default-568h@2x.png */,
+				B8716EEB20D0D9B600ACE7D3 /* CrossStitcher */,
 				B8716EEA20D0D9B600ACE7D3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,12 +49,12 @@
 		B8716EEA20D0D9B600ACE7D3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B8716EE920D0D9B600ACE7D3 /* Swift Fun.app */,
+				B8716EE920D0D9B600ACE7D3 /* CrossStitcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B8716EEB20D0D9B600ACE7D3 /* Swift Fun */ = {
+		B8716EEB20D0D9B600ACE7D3 /* CrossStitcher */ = {
 			isa = PBXGroup;
 			children = (
 				B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */,
@@ -61,15 +64,15 @@
 				B8716EF520D0D9B800ACE7D3 /* LaunchScreen.storyboard */,
 				B8716EF820D0D9B800ACE7D3 /* Info.plist */,
 			);
-			path = "Swift Fun";
+			path = CrossStitcher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B8716EE820D0D9B600ACE7D3 /* Swift Fun */ = {
+		B8716EE820D0D9B600ACE7D3 /* CrossStitcher */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B8716EFB20D0D9B800ACE7D3 /* Build configuration list for PBXNativeTarget "Swift Fun" */;
+			buildConfigurationList = B8716EFB20D0D9B800ACE7D3 /* Build configuration list for PBXNativeTarget "CrossStitcher" */;
 			buildPhases = (
 				B8716EE520D0D9B600ACE7D3 /* Sources */,
 				B8716EE620D0D9B600ACE7D3 /* Frameworks */,
@@ -79,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = "Swift Fun";
+			name = CrossStitcher;
 			productName = "Swift Fun";
-			productReference = B8716EE920D0D9B600ACE7D3 /* Swift Fun.app */;
+			productReference = B8716EE920D0D9B600ACE7D3 /* CrossStitcher.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B8716EE420D0D9B600ACE7D3 /* Build configuration list for PBXProject "Swift Fun" */;
+			buildConfigurationList = B8716EE420D0D9B600ACE7D3 /* Build configuration list for PBXProject "CrossStitcher" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -112,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B8716EE820D0D9B600ACE7D3 /* Swift Fun */,
+				B8716EE820D0D9B600ACE7D3 /* CrossStitcher */,
 			);
 		};
 /* End PBXProject section */
@@ -123,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8716EF720D0D9B800ACE7D3 /* LaunchScreen.storyboard in Resources */,
+				6803194124430D2900320C84 /* Default-568h@2x.png in Resources */,
 				B8716EF420D0D9B800ACE7D3 /* Assets.xcassets in Resources */,
 				B8716EF220D0D9B600ACE7D3 /* Main.storyboard in Resources */,
 			);
@@ -213,7 +217,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -267,7 +271,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -281,12 +285,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Swift Fun/Info.plist";
+				DEVELOPMENT_TEAM = 3ZE6RDM8AN;
+				INFOPLIST_FILE = CrossStitcher/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zappycode.Swift-Fun";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.isoftdv.CrossStitcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -298,12 +304,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "Swift Fun/Info.plist";
+				DEVELOPMENT_TEAM = 3ZE6RDM8AN;
+				INFOPLIST_FILE = CrossStitcher/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zappycode.Swift-Fun";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.isoftdv.CrossStitcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -313,7 +321,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B8716EE420D0D9B600ACE7D3 /* Build configuration list for PBXProject "Swift Fun" */ = {
+		B8716EE420D0D9B600ACE7D3 /* Build configuration list for PBXProject "CrossStitcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B8716EF920D0D9B800ACE7D3 /* Debug */,
@@ -322,7 +330,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B8716EFB20D0D9B800ACE7D3 /* Build configuration list for PBXNativeTarget "Swift Fun" */ = {
+		B8716EFB20D0D9B800ACE7D3 /* Build configuration list for PBXNativeTarget "CrossStitcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B8716EFC20D0D9B800ACE7D3 /* Debug */,

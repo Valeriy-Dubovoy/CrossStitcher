@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Swift Fun
+//  Cross Stitcher
 //
 //  Created by zappycode on 6/13/18.
 //  Copyright © 2018 Nick Walter. All rights reserved.
