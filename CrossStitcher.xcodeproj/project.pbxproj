@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6803194124430D2900320C84 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6803194024430D2900320C84 /* Default-568h@2x.png */; };
+		680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 680319652443112200320C84 /* mainDataModel.xcdatamodeld */; };
 		B8716EED20D0D9B600ACE7D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */; };
 		B8716EEF20D0D9B600ACE7D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */; };
 		B8716EF220D0D9B600ACE7D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8716EF020D0D9B600ACE7D3 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		6803194024430D2900320C84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		680319662443112200320C84 /* mainDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mainDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B8716EE920D0D9B600ACE7D3 /* CrossStitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrossStitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				B8716EF320D0D9B800ACE7D3 /* Assets.xcassets */,
 				B8716EF520D0D9B800ACE7D3 /* LaunchScreen.storyboard */,
 				B8716EF820D0D9B800ACE7D3 /* Info.plist */,
+				680319652443112200320C84 /* mainDataModel.xcdatamodeld */,
 			);
 			path = CrossStitcher;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */,
 				B8716EEF20D0D9B600ACE7D3 /* ViewController.swift in Sources */,
 				B8716EED20D0D9B600ACE7D3 /* AppDelegate.swift in Sources */,
 			);
@@ -340,6 +344,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		680319652443112200320C84 /* mainDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				680319662443112200320C84 /* mainDataModel.xcdatamodel */,
+			);
+			currentVersion = 680319662443112200320C84 /* mainDataModel.xcdatamodel */;
+			name = mainDataModel.xcdatamodeld;
+			path = dataModel/mainDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B8716EE120D0D9B600ACE7D3 /* Project object */;
 }
