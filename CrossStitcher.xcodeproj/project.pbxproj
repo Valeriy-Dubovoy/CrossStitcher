@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6803194124430D2900320C84 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6803194024430D2900320C84 /* Default-568h@2x.png */; };
 		680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 680319652443112200320C84 /* mainDataModel.xcdatamodeld */; };
+		683E5522249F25B7003733CE /* cornerHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683E5521249F25B7003733CE /* cornerHolderView.swift */; };
+		68CF3D492468EC6900E96589 /* GridOverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D472468EC6900E96589 /* GridOverImageView.swift */; };
+		68CF3D4A2468EC6900E96589 /* CrossStitchObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D482468EC6900E96589 /* CrossStitchObject.swift */; };
+		68CF3D4C2468EDDF00E96589 /* crossStitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D4B2468EDDF00E96589 /* crossStitchViewController.swift */; };
+		68CF3D4E247AA06600E96589 /* CrossStitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D4D247AA06600E96589 /* CrossStitchView.swift */; };
 		B8716EED20D0D9B600ACE7D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */; };
 		B8716EEF20D0D9B600ACE7D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */; };
 		B8716EF220D0D9B600ACE7D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8716EF020D0D9B600ACE7D3 /* Main.storyboard */; };
@@ -17,8 +21,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6803194024430D2900320C84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		680319662443112200320C84 /* mainDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mainDataModel.xcdatamodel; sourceTree = "<group>"; };
+		683E5521249F25B7003733CE /* cornerHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cornerHolderView.swift; sourceTree = "<group>"; };
+		68CF3D472468EC6900E96589 /* GridOverImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridOverImageView.swift; sourceTree = "<group>"; };
+		68CF3D482468EC6900E96589 /* CrossStitchObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossStitchObject.swift; sourceTree = "<group>"; };
+		68CF3D4B2468EDDF00E96589 /* crossStitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crossStitchViewController.swift; sourceTree = "<group>"; };
+		68CF3D4D247AA06600E96589 /* CrossStitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossStitchView.swift; sourceTree = "<group>"; };
 		B8716EE920D0D9B600ACE7D3 /* CrossStitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrossStitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,10 +47,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6824CDDA2468E6A300B541D3 /* Supportinf Files */ = {
+			isa = PBXGroup;
+			children = (
+				B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */,
+				B8716EF520D0D9B800ACE7D3 /* LaunchScreen.storyboard */,
+			);
+			path = "Supportinf Files";
+			sourceTree = "<group>";
+		};
+		6824CDDB2468E6D500B541D3 /* DB support */ = {
+			isa = PBXGroup;
+			children = (
+				680319652443112200320C84 /* mainDataModel.xcdatamodeld */,
+			);
+			path = "DB support";
+			sourceTree = "<group>";
+		};
 		B8716EE020D0D9B600ACE7D3 = {
 			isa = PBXGroup;
 			children = (
-				6803194024430D2900320C84 /* Default-568h@2x.png */,
 				B8716EEB20D0D9B600ACE7D3 /* CrossStitcher */,
 				B8716EEA20D0D9B600ACE7D3 /* Products */,
 			);
@@ -59,13 +83,17 @@
 		B8716EEB20D0D9B600ACE7D3 /* CrossStitcher */ = {
 			isa = PBXGroup;
 			children = (
-				B8716EEC20D0D9B600ACE7D3 /* AppDelegate.swift */,
-				B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */,
+				68CF3D4B2468EDDF00E96589 /* crossStitchViewController.swift */,
+				683E5521249F25B7003733CE /* cornerHolderView.swift */,
+				68CF3D482468EC6900E96589 /* CrossStitchObject.swift */,
+				68CF3D472468EC6900E96589 /* GridOverImageView.swift */,
+				68CF3D4D247AA06600E96589 /* CrossStitchView.swift */,
 				B8716EF020D0D9B600ACE7D3 /* Main.storyboard */,
+				6824CDDB2468E6D500B541D3 /* DB support */,
 				B8716EF320D0D9B800ACE7D3 /* Assets.xcassets */,
-				B8716EF520D0D9B800ACE7D3 /* LaunchScreen.storyboard */,
+				B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */,
+				6824CDDA2468E6A300B541D3 /* Supportinf Files */,
 				B8716EF820D0D9B800ACE7D3 /* Info.plist */,
-				680319652443112200320C84 /* mainDataModel.xcdatamodeld */,
 			);
 			path = CrossStitcher;
 			sourceTree = "<group>";
@@ -102,6 +130,7 @@
 				TargetAttributes = {
 					B8716EE820D0D9B600ACE7D3 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -129,7 +158,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8716EF720D0D9B800ACE7D3 /* LaunchScreen.storyboard in Resources */,
-				6803194124430D2900320C84 /* Default-568h@2x.png in Resources */,
 				B8716EF420D0D9B800ACE7D3 /* Assets.xcassets in Resources */,
 				B8716EF220D0D9B600ACE7D3 /* Main.storyboard in Resources */,
 			);
@@ -142,9 +170,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */,
 				B8716EEF20D0D9B600ACE7D3 /* ViewController.swift in Sources */,
+				68CF3D4A2468EC6900E96589 /* CrossStitchObject.swift in Sources */,
 				B8716EED20D0D9B600ACE7D3 /* AppDelegate.swift in Sources */,
+				683E5522249F25B7003733CE /* cornerHolderView.swift in Sources */,
+				68CF3D492468EC6900E96589 /* GridOverImageView.swift in Sources */,
+				68CF3D4C2468EDDF00E96589 /* crossStitchViewController.swift in Sources */,
+				68CF3D4E247AA06600E96589 /* CrossStitchView.swift in Sources */,
+				680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,8 +385,7 @@
 				680319662443112200320C84 /* mainDataModel.xcdatamodel */,
 			);
 			currentVersion = 680319662443112200320C84 /* mainDataModel.xcdatamodel */;
-			name = mainDataModel.xcdatamodeld;
-			path = dataModel/mainDataModel.xcdatamodeld;
+			path = mainDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
