@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,6 +47,72 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
+    lazy var applicationDocumentDirectory: NSURL = {
+        // THe directory the application uses to store Core Data Store file
+        // This code uses a directory named "ru.isoftdv.CrossStitcher" in the application's Support directory
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls.last! as NSURL
+    }()
+
+
+    lazy var ubiquityContainerURL: NSURL = {
+        let url = FileManager.default.url( forUbiquityContainerIdentifier: nil )
+        
+        return url! as NSURL
+    }()
+
+    lazy var managedObjectModel: NSManagedObjectModel = {
+        let modelURL = Bundle.main.url(forResource: "CrossStitcher", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
+    }()
+    
+    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+        var coordinator = NSPersistentStoreCoordinator( managedObjectModel: self.managedObjectModel )
+        
+        var urlForDatbase: URL
+        
+        do {
+            var documentDirectory = try FileManager.default.url(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
+            
+            urlForDatbase = documentDirectory.appendingPathComponent("CrossStitcher.sqllite")
+        } catch let error {
+            NSLog("Error defining document directory for iCloud \(error), \(error.localizedDescription)")
+            
+            urlForDatbase = self.applicationDocumentDirectory.appendingPathComponent("CrossStitcher.sqllite")!
+        }
+        
+        let storeOptions: [String : Any] = [
+        NSMigratePersistentStoresAutomaticallyOption:NSNumber(booleanLiteral: true),
+        NSInferMappingModelAutomaticallyOption:NSNumber(booleanLiteral: true)]
+        
+        
+        do{
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: urlForDatbase, options: nil)
+        } catch let error {
+            //error будет содержать информацию об ошибку - объект, поддерживающий протокол Error(типа NSError)
+            // обычно это enum, в котором есть асоциированные данные об ошибке
+            NSLog("Error adding persistent store for coordinator \(error), \(error.localizedDescription)")
+            
+            abort()
+
+            //throws error //здесь происходит передача ошибки выше по вызовам (только если этот метод описан ка throws)
+        }
+        
+        return coordinator
+    }()
+    
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        var moc = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+        moc.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return moc
+    }()
+    
+    static var managedObjectContext: NSManagedObjectContext {
+        return (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+    }
+
+
+    
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -54,6 +121,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
         */
         let container = NSPersistentContainer(name: "CrossStitcher")
+        
+        if container.persistentStoreDescriptions.count > 0{
+            container.persistentStoreDescriptions[0].shouldInferMappingModelAutomatically = true
+            container.persistentStoreDescriptions[0].shouldAddStoreAsynchronously = true
+            container.persistentStoreDescriptions[0].shouldMigrateStoreAutomatically = true
+        }
+
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
@@ -72,10 +146,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+    
+    static var persistentContainer: NSPersistentContainer {
+        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    }
 
+    static var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
     // MARK: - Core Data Saving support
 
-    func saveContext () {
+    func saveContext () throws {
+        /*
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
@@ -86,7 +168,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }*/
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                throw error
+                //let nserror = error as NSError
+                //fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
         }
+        
+    }
+    
+    func showAlertMessage(_ messageText: String, withTitle title: String, inView vc:UIViewController ){
+        let alert = UIAlertController(title: NSLocalizedString( title, comment: "" ),
+                                      message: NSLocalizedString( messageText, comment: "" ),
+                                      preferredStyle: .alert)
+        
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+                          style: .default,
+                          handler: { _ in NSLog("The \"OK\" alert occured.") }
+            )
+        )
+        vc.present(alert, animated: true, completion: nil)
     }
 }
 

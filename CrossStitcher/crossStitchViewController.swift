@@ -21,11 +21,12 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
                     image = sImage
                 }
             
-            
             initColumnsLabels()
             initRowsLabels()
         }
     }
+    
+    private var modified = false
 
     // MARK: scroll & zoom
     @IBOutlet weak var gridScrollView: UIScrollView!{
@@ -107,7 +108,7 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
             for column in 1...columns/10 {
                 
                 let newLabel = UILabel(frame: CGRect())
-                frameView.addSubview(newLabel)
+                frameView?.addSubview(newLabel)
                 newLabel.text = "\(column * 10)"
                 newLabel.sizeToFit()
                 setCenterForColumnLabel(newLabel, inColumn: column)
@@ -126,15 +127,13 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
             for row in 1...rows/10 {
                 
                 let newLabel = UILabel(frame: CGRect())
-                frameView.addSubview(newLabel)
+                frameView?.addSubview(newLabel)
                 newLabel.text = "\(row * 10)"
                 newLabel.sizeToFit()
                 setCenterForRowLabel(newLabel, inRow: row)
-
                 
                 rowsLabels.append(newLabel)
             }
-        
     }
     
     private func rearrangeLabels() {
@@ -209,6 +208,8 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
         }
     }
 
+    // MARK: grid HOLDERS
+    
     private func setGridHolders() {
         upperLeftHolder = cornerHolderView()
         lowerRightHolder = cornerHolderView()
@@ -227,43 +228,43 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
     
     var upperLeftHolder: cornerHolderView? {
         didSet{
-            if let newSquare = self.upperLeftHolder {
-                gridScrollView.addSubview(newSquare)
+            if let holder = self.upperLeftHolder {
+                gridScrollView.addSubview( holder )
                 setUpperLeftHolderPosition()
 
                 let panGestureRecognizer = UIPanGestureRecognizer(
                             target: self,
                             action: #selector(self.gridHolderPanGestureHandler(recognizer:))
                     )
-                newSquare.addGestureRecognizer( panGestureRecognizer )
+                holder.addGestureRecognizer( panGestureRecognizer )
             }
         }
     }
             
     var lowerRightHolder: cornerHolderView? {
         didSet{
-            if let newSquare = self.lowerRightHolder {
-                gridScrollView.addSubview(newSquare)
+            if let holder = self.lowerRightHolder {
+                gridScrollView.addSubview( holder )
                 setLowerRightHolderPosition()
 
                 let panGestureRecognizer = UIPanGestureRecognizer(
                             target: self,
                             action: #selector(self.gridHolderPanGestureHandler(recognizer:))
                     )
-                newSquare.addGestureRecognizer( panGestureRecognizer )
+                holder.addGestureRecognizer( panGestureRecognizer )
             }
         }
     }
     
     private func setUpperLeftHolderPosition() {
-        if let newSquare = self.upperLeftHolder {
-            newSquare.center = zoomableImageView.convertToScreenCoordinates(forPoint: gridRect.origin)
+        if let holder = self.upperLeftHolder {
+            holder.center = zoomableImageView.convertToScreenCoordinates(forPoint: gridRect.origin)
         }
     }
     
     private func setLowerRightHolderPosition() {
-        if let newSquare = self.lowerRightHolder {
-            newSquare.center = zoomableImageView.convertToScreenCoordinates(forPoint: CGPoint(x: gridRect.maxX, y: gridRect.maxY) )
+        if let holder = self.lowerRightHolder {
+            holder.center = zoomableImageView.convertToScreenCoordinates(forPoint: CGPoint(x: gridRect.maxX, y: gridRect.maxY) )
         }
     }
     
@@ -285,7 +286,7 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
             holder.center = self.initialCenter
             case .changed: fallthrough    //"fallthrough" = выполнить код для следующего case (можно так же писать "case .changed, .ended:" )
             case .ended:
-                //обновить что-то связанное с координатами жеста translation.x, translation.y в системе координат pannableView
+                //обновить координаты центра holder в соответствии с координатами жеста translation.x, translation.y в системе координат superview
                 // Add the X and Y translation to the view's original position.
                 let newCenter = CGPoint(x: initialCenter.x + translation.x, y: initialCenter.y + translation.y)
                 holder.center = newCenter
@@ -302,9 +303,7 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
                                  height: (endPoint.y - startPoint.y))
             self.gridRect = newRect
         }
-        
     }
-
     
     // MARK: controller Events
     

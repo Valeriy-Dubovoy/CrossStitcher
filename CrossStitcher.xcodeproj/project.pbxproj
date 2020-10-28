@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 680319652443112200320C84 /* mainDataModel.xcdatamodeld */; };
+		680276F82541A3AA00C8629A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680276F72541A3AA00C8629A /* CloudKit.framework */; };
+		680276FB2541A6D700C8629A /* CS_DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680276FA2541A6D700C8629A /* CS_DataModel.swift */; };
+		680319672443112200320C84 /* CrossStitcher.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 680319652443112200320C84 /* CrossStitcher.xcdatamodeld */; };
 		683E5522249F25B7003733CE /* cornerHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683E5521249F25B7003733CE /* cornerHolderView.swift */; };
+		683E554724A34803003733CE /* csListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683E554624A34803003733CE /* csListTableViewController.swift */; };
+		683E554B24A6257A003733CE /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683E554A24A6257A003733CE /* FetchedResultsTableViewController.swift */; };
+		683E554D24A77302003733CE /* CrossStitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683E554C24A77302003733CE /* CrossStitch.swift */; };
+		683E555124A84B05003733CE /* csEditorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683E555024A84B05003733CE /* csEditorTableViewController.swift */; };
 		68CF3D492468EC6900E96589 /* GridOverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D472468EC6900E96589 /* GridOverImageView.swift */; };
 		68CF3D4A2468EC6900E96589 /* CrossStitchObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D482468EC6900E96589 /* CrossStitchObject.swift */; };
 		68CF3D4C2468EDDF00E96589 /* crossStitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF3D4B2468EDDF00E96589 /* crossStitchViewController.swift */; };
@@ -21,8 +27,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		680276F52541A32800C8629A /* CrossStitcherRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrossStitcherRelease.entitlements; sourceTree = "<group>"; };
+		680276F72541A3AA00C8629A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		680276F92541A3E000C8629A /* CrossStitcherDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrossStitcherDebug.entitlements; sourceTree = "<group>"; };
+		680276FA2541A6D700C8629A /* CS_DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CS_DataModel.swift; sourceTree = "<group>"; };
 		680319662443112200320C84 /* mainDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mainDataModel.xcdatamodel; sourceTree = "<group>"; };
 		683E5521249F25B7003733CE /* cornerHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cornerHolderView.swift; sourceTree = "<group>"; };
+		683E554624A34803003733CE /* csListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csListTableViewController.swift; sourceTree = "<group>"; };
+		683E554A24A6257A003733CE /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
+		683E554C24A77302003733CE /* CrossStitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossStitch.swift; sourceTree = "<group>"; };
+		683E555024A84B05003733CE /* csEditorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csEditorTableViewController.swift; sourceTree = "<group>"; };
 		68CF3D472468EC6900E96589 /* GridOverImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridOverImageView.swift; sourceTree = "<group>"; };
 		68CF3D482468EC6900E96589 /* CrossStitchObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossStitchObject.swift; sourceTree = "<group>"; };
 		68CF3D4B2468EDDF00E96589 /* crossStitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crossStitchViewController.swift; sourceTree = "<group>"; };
@@ -41,12 +55,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				680276F82541A3AA00C8629A /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		680276F62541A3AA00C8629A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				680276F72541A3AA00C8629A /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6824CDDA2468E6A300B541D3 /* Supportinf Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -59,7 +82,10 @@
 		6824CDDB2468E6D500B541D3 /* DB support */ = {
 			isa = PBXGroup;
 			children = (
-				680319652443112200320C84 /* mainDataModel.xcdatamodeld */,
+				680319652443112200320C84 /* CrossStitcher.xcdatamodeld */,
+				683E554C24A77302003733CE /* CrossStitch.swift */,
+				680276FA2541A6D700C8629A /* CS_DataModel.swift */,
+				683E554A24A6257A003733CE /* FetchedResultsTableViewController.swift */,
 			);
 			path = "DB support";
 			sourceTree = "<group>";
@@ -69,6 +95,7 @@
 			children = (
 				B8716EEB20D0D9B600ACE7D3 /* CrossStitcher */,
 				B8716EEA20D0D9B600ACE7D3 /* Products */,
+				680276F62541A3AA00C8629A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,12 +110,16 @@
 		B8716EEB20D0D9B600ACE7D3 /* CrossStitcher */ = {
 			isa = PBXGroup;
 			children = (
+				680276F92541A3E000C8629A /* CrossStitcherDebug.entitlements */,
+				680276F52541A32800C8629A /* CrossStitcherRelease.entitlements */,
+				B8716EF020D0D9B600ACE7D3 /* Main.storyboard */,
 				68CF3D4B2468EDDF00E96589 /* crossStitchViewController.swift */,
 				683E5521249F25B7003733CE /* cornerHolderView.swift */,
-				68CF3D482468EC6900E96589 /* CrossStitchObject.swift */,
 				68CF3D472468EC6900E96589 /* GridOverImageView.swift */,
 				68CF3D4D247AA06600E96589 /* CrossStitchView.swift */,
-				B8716EF020D0D9B600ACE7D3 /* Main.storyboard */,
+				68CF3D482468EC6900E96589 /* CrossStitchObject.swift */,
+				683E554624A34803003733CE /* csListTableViewController.swift */,
+				683E555024A84B05003733CE /* csEditorTableViewController.swift */,
 				6824CDDB2468E6D500B541D3 /* DB support */,
 				B8716EF320D0D9B800ACE7D3 /* Assets.xcassets */,
 				B8716EEE20D0D9B600ACE7D3 /* ViewController.swift */,
@@ -170,14 +201,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				683E554724A34803003733CE /* csListTableViewController.swift in Sources */,
 				B8716EEF20D0D9B600ACE7D3 /* ViewController.swift in Sources */,
 				68CF3D4A2468EC6900E96589 /* CrossStitchObject.swift in Sources */,
 				B8716EED20D0D9B600ACE7D3 /* AppDelegate.swift in Sources */,
+				680276FB2541A6D700C8629A /* CS_DataModel.swift in Sources */,
+				683E555124A84B05003733CE /* csEditorTableViewController.swift in Sources */,
 				683E5522249F25B7003733CE /* cornerHolderView.swift in Sources */,
 				68CF3D492468EC6900E96589 /* GridOverImageView.swift in Sources */,
+				683E554B24A6257A003733CE /* FetchedResultsTableViewController.swift in Sources */,
+				683E554D24A77302003733CE /* CrossStitch.swift in Sources */,
 				68CF3D4C2468EDDF00E96589 /* crossStitchViewController.swift in Sources */,
 				68CF3D4E247AA06600E96589 /* CrossStitchView.swift in Sources */,
-				680319672443112200320C84 /* mainDataModel.xcdatamodeld in Sources */,
+				680319672443112200320C84 /* CrossStitcher.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +357,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CrossStitcher/CrossStitcherDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3ZE6RDM8AN;
 				INFOPLIST_FILE = CrossStitcher/Info.plist;
@@ -340,6 +377,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CrossStitcher/CrossStitcherRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3ZE6RDM8AN;
 				INFOPLIST_FILE = CrossStitcher/Info.plist;
@@ -379,13 +417,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		680319652443112200320C84 /* mainDataModel.xcdatamodeld */ = {
+		680319652443112200320C84 /* CrossStitcher.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				680319662443112200320C84 /* mainDataModel.xcdatamodel */,
 			);
 			currentVersion = 680319662443112200320C84 /* mainDataModel.xcdatamodel */;
-			path = mainDataModel.xcdatamodeld;
+			path = CrossStitcher.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

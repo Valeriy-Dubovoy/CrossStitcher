@@ -28,4 +28,15 @@ class CrossStitchObject {
             gridRect = CGRect(x: 0, y: 0, width: realImage.size.width, height: realImage.size.height)
         }
     }
+    
+    init(withCrossStitchDBobject crossStitch:CrossStitch) {
+        rows = Int(crossStitch.gridRows)
+        columns = Int(crossStitch.gridColumns)
+        gridRect = CGRect(x: CGFloat(crossStitch.gridRectX),
+                          y: CGFloat(crossStitch.gridRectY),
+                          width: CGFloat(crossStitch.gridRectWidth), height: CGFloat(crossStitch.gridRectHeight))
+        if let dataForImg = crossStitch.schemaData {
+            schemaImage = UIImage(data: dataForImg )
+        }
+    }
 }
