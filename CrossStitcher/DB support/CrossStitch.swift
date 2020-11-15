@@ -12,7 +12,8 @@ import CoreData
 class CrossStitch: NSManagedObject {
 
     func getCrossStitchObject() -> CrossStitchObject {
-        let cso = CrossStitchObject.init(withCrossStitchDBobject: self)
+        let cso = CrossStitchObject()
+        cso.crossStitchDBObject = self
         return cso
     }
     

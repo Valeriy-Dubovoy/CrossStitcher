@@ -10,7 +10,36 @@ import UIKit
 
 class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
-    var crossStitchObject = CrossStitchObject(withImage: nil) {
+    // MARK: controller Events
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+       /* let objectToOpen = CrossStitchObject()//(withImage: UIImage(named: "testImage"))
+        objectToOpen.schemaImage = UIImage(named: "testImage")
+        objectToOpen.rows = 30
+        objectToOpen.columns = 40
+        objectToOpen.gridRect = CGRect(x: 0, y: 0, width: objectToOpen.imageSize.width, height: objectToOpen.imageSize.height)
+
+        crossStitchObject = objectToOpen
+        */
+        if csDBObject != nil {
+            crossStitchObject = csDBObject!.getCrossStitchObject()
+        }
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if csDBObject != nil {
+            self.rearrangeLabels()
+        }
+    }
+    
+    var csDBObject: CrossStitch?
+    
+    private var crossStitchObject = CrossStitchObject() {
         didSet {
             let csObj = self.crossStitchObject
                 zoomableImageView.gridRect = csObj.gridRect
@@ -21,8 +50,11 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
                     image = sImage
                 }
             
-            initColumnsLabels()
-            initRowsLabels()
+            if gridScrollView != nil {
+                initColumnsLabels()
+                initRowsLabels()
+
+            }
         }
     }
     
@@ -303,21 +335,6 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
                                  height: (endPoint.y - startPoint.y))
             self.gridRect = newRect
         }
-    }
-    
-    // MARK: controller Events
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let objectToOpen = CrossStitchObject(withImage: UIImage(named: "testImage"))
-        objectToOpen.rows = 30
-        objectToOpen.columns = 40
-        objectToOpen.gridRect = CGRect(x: 0, y: 0, width: objectToOpen.imageSize.width, height: objectToOpen.imageSize.height)
-
-        crossStitchObject = objectToOpen
-        
-        // Do any additional setup after loading the view.
     }
     
     

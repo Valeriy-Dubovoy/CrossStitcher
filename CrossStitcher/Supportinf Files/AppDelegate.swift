@@ -47,19 +47,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
-    lazy var applicationDocumentDirectory: NSURL = {
+    lazy var applicationDocumentDirectory: URL = {
         // THe directory the application uses to store Core Data Store file
         // This code uses a directory named "ru.isoftdv.CrossStitcher" in the application's Support directory
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls.last! as NSURL
+        return urls.first! as URL
     }()
 
 
-    lazy var ubiquityContainerURL: NSURL = {
+    /*A URL pointing to the specified ubiquity container, or nil if the container could not be located or if iCloud storage is unavailable for the current user or device.
+
+    You use this method to determine the location of your app’s ubiquity container directories and to configure your app’s initial iCloud access. The first time you call this method for a given ubiquity container, the system extends your app’s sandbox to include that container. In iOS, you must call this method at least once before trying to search for cloud-based files in the ubiquity container. If your app accesses multiple ubiquity containers, call this method once for each container. In macOS, you do not need to call this method if you use NSDocument-based objects, because the system then calls this method automatically.
+
+    You can use the URL returned by this method to build paths to files and directories within your app’s ubiquity container. Each app that syncs documents to the cloud must have at least one associated ubiquity container in which to put those files. This container can be unique to the app or shared by multiple apps.
+
+    Important
+
+    Do not call this method from your app’s main thread. Because this method might take a nontrivial amount of time to set up iCloud and return the requested URL, you should always call it from a secondary thread. To determine if iCloud is available, especially at launch time, check the value of the ubiquityIdentityToken property instead.*/
+    lazy var ubiquityContainerURL: URL? = {
+        /*containerID
+        The fully-qualified container identifier for an iCloud container directory. The string you specify must not contain wildcards and must be of the form <TEAMID>.<CONTAINER>, where <TEAMID> is your development team ID and <CONTAINER> is the bundle identifier of the container you want to access.
+
+        The container identifiers for your app must be declared in the com.apple.developer.ubiquity-container-identifiers array of the .entitlements property list file in your Xcode project.
+
+        If you specify nil for this parameter, this method returns the first container listed in the com.apple.developer.ubiquity-container-identifiers entitlement array */
         let url = FileManager.default.url( forUbiquityContainerIdentifier: nil )
         
-        return url! as NSURL
+        return url
     }()
+  
+    /*In iCloud Drive Documents, when iCloud is available, ubiquityIdentityToken property contains an opaque object representing the identity of the current user. If iCloud is unavailable or there is no logged-in user, the value of this property is nil. Accessing the value of this property is relatively fast, so you can check the value at launch time from your app’s main thread.
+
+    You can use the token in this property, together with the NSUbiquityIdentityDidChange notification, to detect when the user logs in or out of iCloud and to detect changes to the active iCloud account. When the user logs in with a different iCloud account, the identity token changes, and the system posts the notification. If you stored or archived the previous token, compare that token to the newly obtained one using the isEqual(_:) method to determine if the users are the same or different.
+
+    Accessing the token in this property doesn’t connect your app to its ubiquity containers. To establish access to a ubiquity container, call the url(forUbiquityContainerIdentifier:) method. In macOS, you can instead use an NSDocument object, which establishes access automatically.*/
+    lazy var ubiquityIdentityToken: (NSCoding & NSCopying & NSObjectProtocol)? = {
+        return FileManager.default.ubiquityIdentityToken
+    }()
+    
+    /* Для CloudKit для проверки доступности iCloud необходимо использовать метод accountStatus(completionHandler:)
+    Reports whether the current user’s iCloud account can be accessed. */
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         let modelURL = Bundle.main.url(forResource: "CrossStitcher", withExtension: "momd")!
@@ -78,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch let error {
             NSLog("Error defining document directory for iCloud \(error), \(error.localizedDescription)")
             
-            urlForDatbase = self.applicationDocumentDirectory.appendingPathComponent("CrossStitcher.sqllite")!
+            urlForDatbase = self.applicationDocumentDirectory.appendingPathComponent("CrossStitcher.sqllite")
         }
         
         let storeOptions: [String : Any] = [
@@ -123,9 +150,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let container = NSPersistentContainer(name: "CrossStitcher")
         
         if container.persistentStoreDescriptions.count > 0{
-            container.persistentStoreDescriptions[0].shouldInferMappingModelAutomatically = true
-            container.persistentStoreDescriptions[0].shouldAddStoreAsynchronously = true
-            container.persistentStoreDescriptions[0].shouldMigrateStoreAutomatically = true
+            container.persistentStoreDescriptions.first?.shouldInferMappingModelAutomatically = true
+            container.persistentStoreDescriptions.first?.shouldAddStoreAsynchronously = true
+            container.persistentStoreDescriptions.first?.shouldMigrateStoreAutomatically = true
         }
 
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

@@ -113,7 +113,20 @@ class csListTableViewController: FetchedResultsTableViewController {
     */
 
     // MARK: - Navigation
-
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool{
+        if identifier == "show stitcher" {
+            if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
+                
+                let object = fetchedResultController?.object(at: indexPath) as! CrossStitch?
+                if (object?.schemaData) == nil {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -139,10 +152,12 @@ class csListTableViewController: FetchedResultsTableViewController {
             if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
                 
                 let object = fetchedResultController?.object(at: indexPath) as! CrossStitch
-                let navigationVC = segue.destination as? UINavigationController
-                if let editorVC = navigationVC?.viewControllers[0] as? crossStitchViewController {
-                    editorVC.crossStitchObject = CrossStitchObject.init(withCrossStitchDBobject: object)
-                }
+                
+                //let navigationVC = segue.destination as? UINavigationController
+                //let editorVC = navigationVC?.viewControllers[0] as? crossStitchViewController
+                
+                let editorVC = segue.destination as? crossStitchViewController
+                editorVC?.csDBObject = object
             }
         default:
             break

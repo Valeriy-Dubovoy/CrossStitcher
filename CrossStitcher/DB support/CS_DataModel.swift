@@ -46,7 +46,7 @@ class CS_DataModel: NSObject {
 
     // MARK: - Methods
 /*
-    func nitWithCompletionBlock(_ {()})
+    func шnitWithCompletionBlock(_ {()})
     {
         self.iCloudIsInUse = NO;
        
