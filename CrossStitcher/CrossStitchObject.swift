@@ -12,14 +12,14 @@ class CrossStitchObject {
     var crossStitchDBObject: CrossStitch? {
         didSet{
             if let crossStitch = crossStitchDBObject {
+                if let dataForImg = crossStitch.schemaData {
+                    schemaImage = UIImage(data: dataForImg )
+                }
                 rows = Int(crossStitch.gridRows)
                 columns = Int(crossStitch.gridColumns)
                 gridRect = CGRect(x: CGFloat(crossStitch.gridRectX),
                                   y: CGFloat(crossStitch.gridRectY),
                                   width: CGFloat(crossStitch.gridRectWidth), height: CGFloat(crossStitch.gridRectHeight))
-                if let dataForImg = crossStitch.schemaData {
-                    schemaImage = UIImage(data: dataForImg )
-                }
             }
         }
     }

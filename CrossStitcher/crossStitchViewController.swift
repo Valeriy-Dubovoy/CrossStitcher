@@ -37,6 +37,15 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        // перед закрытием окна сохраним изменения
+        if csDBObject != nil {
+            csDBObject?.updateFromCrossStitchObject(crossStitchObject, inViewContorller: self)
+        }
+        
+        super.viewWillDisappear(animated)
+    }
+    
     var csDBObject: CrossStitch?
     
     private var crossStitchObject = CrossStitchObject() {
