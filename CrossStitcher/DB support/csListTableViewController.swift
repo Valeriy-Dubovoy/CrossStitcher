@@ -151,13 +151,12 @@ class csListTableViewController: FetchedResultsTableViewController {
         case "show stitcher":
             if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
                 
-                let object = fetchedResultController?.object(at: indexPath) as! CrossStitch
-                
-                //let navigationVC = segue.destination as? UINavigationController
-                //let editorVC = navigationVC?.viewControllers[0] as? crossStitchViewController
-                
-                let editorVC = segue.destination as? crossStitchViewController
-                editorVC?.csDBObject = object
+                if let object = fetchedResultController?.object(at: indexPath) as? CrossStitch,
+                    let editorVC = segue.destination as? crossStitchViewController {
+                    
+                    editorVC.csDBObject = object
+                    editorVC.navigationItem.title = object.name
+                }
             }
         default:
             break

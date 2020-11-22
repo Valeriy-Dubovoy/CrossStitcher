@@ -114,7 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         do{
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: urlForDatbase, options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
+                                               configurationName: nil,
+                                               at: urlForDatbase,
+                                               options: [NSMigratePersistentStoresAutomaticallyOption:NSNumber(true), NSInferMappingModelAutomaticallyOption:NSNumber(true)])
         } catch let error {
             //error будет содержать информацию об ошибку - объект, поддерживающий протокол Error(типа NSError)
             // обычно это enum, в котором есть асоциированные данные об ошибке

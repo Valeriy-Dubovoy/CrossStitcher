@@ -18,6 +18,7 @@ class CrossStitch: NSManagedObject {
     }
     
     func updateFromCrossStitchObject(_ crossStitchObject : CrossStitchObject, inViewContorller vc: UIViewController) {
+        print("db Update")
         gridRows = Int16(crossStitchObject.rows)
         gridColumns = Int16(crossStitchObject.columns)
         gridRectX = Float(crossStitchObject.gridRect.minX)

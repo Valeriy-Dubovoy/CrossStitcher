@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import Foundation
 
 class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
@@ -37,11 +38,24 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
         }
     }
     
+    var timerForSaving: Timer?
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        if timerForSaving == nil {
+//            timerForSaving = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { (withTimer) in
+//                print("timer is active")
+//                self.csDBObject?.updateFromCrossStitchObject(self.crossStitchObject, inViewContorller: self)
+//            })
+//        }
+        
+        timerForSaving?.fire()
+        super.viewWillAppear(animated)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         // перед закрытием окна сохраним изменения
-        if csDBObject != nil {
-            csDBObject?.updateFromCrossStitchObject(crossStitchObject, inViewContorller: self)
-        }
+        timerForSaving?.invalidate()
+        csDBObject?.updateFromCrossStitchObject(crossStitchObject, inViewContorller: self)
         
         super.viewWillDisappear(animated)
     }
@@ -58,6 +72,8 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
                 if let sImage = csObj.schemaImage {
                     image = sImage
                 }
+            
+            zoomableImageView.markedCells = convertStringMarkersToDictionary(stringMarkers: csDBObject?.markedCells)
             
             if gridScrollView != nil {
                 initColumnsLabels()
@@ -217,7 +233,23 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
 
     // MARK: controller MODE
     
-    var mode = vcMode.scene
+    var mode = vcMode.scene {
+        didSet{
+            endMarkerMode()
+            removeGridHolders()
+
+            switch mode {
+            case .scene:
+                break
+            case .grid:
+                setGridHolders()
+            case .marker1:
+                startMarkerMode()
+            case .marker2:
+                startMarkerMode()
+            }
+        }
+    }
     
     @IBOutlet weak var modeSwitchSegmentControl: UISegmentedControl! {
         didSet{
@@ -233,22 +265,8 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
             case 3: mode = .marker2
             default: break
         }
-        changeMode()
     }
     
-    func changeMode() {
-        switch mode {
-        case .scene:
-            removeGridHolders()
-        case .grid:
-            setGridHolders()
-        case .marker1:
-            removeGridHolders()
-        case .marker2:
-            removeGridHolders()
-        }
-    }
-
     // MARK: grid HOLDERS
     
     private func setGridHolders() {
@@ -299,13 +317,19 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
     
     private func setUpperLeftHolderPosition() {
         if let holder = self.upperLeftHolder {
-            holder.center = zoomableImageView.convertToScreenCoordinates(forPoint: gridRect.origin)
+            let pointForHolder = CGPoint(x: max( min(gridRect.minX, zoomableImageView.originalSize.width), 0),
+                                         y: max( min( gridRect.minY, zoomableImageView.originalSize.height), 0))
+            
+            holder.center = zoomableImageView.convertToScreenCoordinates(forPoint: pointForHolder)
         }
     }
     
     private func setLowerRightHolderPosition() {
         if let holder = self.lowerRightHolder {
-            holder.center = zoomableImageView.convertToScreenCoordinates(forPoint: CGPoint(x: gridRect.maxX, y: gridRect.maxY) )
+            let pointForHolder = CGPoint(x: max( min(gridRect.maxX, zoomableImageView.originalSize.width), 0),
+                                         y: max( min( gridRect.maxY, zoomableImageView.originalSize.height), 0))
+
+            holder.center = zoomableImageView.convertToScreenCoordinates(forPoint: pointForHolder )
         }
     }
     
@@ -346,7 +370,93 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
         }
     }
     
+    // MARK: - Marker mode
     
+    private func startMarkerMode() {
+//        let panGestureRecognizer = UIPanGestureRecognizer(
+//                    target: self,
+//                    action: #selector(self.markerModePanGestureHandler)
+//            )
+//        zoomableImageView.addGestureRecognizer( panGestureRecognizer )
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.markerModeTapGestureHandler))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.numberOfTouchesRequired = 1
+        
+        gridScrollView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func endMarkerMode() {
+        if gridScrollView.gestureRecognizers != nil {
+            for gesture in gridScrollView.gestureRecognizers! {
+                if gesture.isKind(of: UITapGestureRecognizer.self) {
+                    gridScrollView.removeGestureRecognizer(gesture)
+                }
+            }
+
+        }
+    }
+    
+    
+    @objc func markerModeTapGestureHandler( recognizer: UITapGestureRecognizer ) {
+        if recognizer.state == .ended {
+            let pointOfTap = recognizer.location(in: zoomableImageView)
+            let cell = zoomableImageView.cellForPoint(point: pointOfTap)
+            zoomableImageView.changeMark(atCell: cell, withMark: self.mode == .marker1 ? 1 : 2)
+            
+            csDBObject?.markedCells = convertMakersToString()
+        }
+    }
+    
+    func convertMakersToString() -> String {
+        let encoder = JSONEncoder()
+        //encoder.outputFormatting = .prettyPrinted
+
+        let data = try? encoder.encode(zoomableImageView.markedCells)
+        if data != nil {
+            return String(data: data!, encoding: .utf8) ?? "{}"
+        }
+        return "{}"
+    }
+    
+    func convertStringMarkersToDictionary(stringMarkers: String?) -> [Int: Int] {
+        let emptyResult :[Int: Int] = [:]
+        
+        if stringMarkers == nil {
+            return emptyResult
+        }
+        
+        let decoder = JSONDecoder()
+        if let decodableString = stringMarkers!.data(using: .utf8) {
+            let dict = try? decoder.decode([Int: Int].self, from: decodableString)
+            
+            return  dict ?? emptyResult
+        }
+        return emptyResult
+    }
+    
+    /*
+    @objc func markerModePanGestureHandler( recognizer: UIPanGestureRecognizer ) {
+        // Get the changes in the X and Y directions relative to
+        // the superview's coordinate space.
+        //let translation = recognizer.translation(in: zoomableImageView.superview)
+        
+        switch recognizer.state {
+            case .began:
+                //markerPanned = []
+            break
+            case .cancelled:
+                // отменить все выделения?
+                break
+            case .changed: fallthrough    //"fallthrough" = выполнить код для следующего case (можно так же писать "case .changed, .ended:" )
+            case .ended:
+                //определить по координатам ячейку и установить отметку
+//                let newCenter = CGPoint(x: initialCenter.x + translation.x, y: initialCenter.y + translation.y)
+//                holder.center = newCenter
+                //recognizer.setTranslation(CGPoint.zero, in: holder)
+                break
+            default: break
+        }
+    }*/
 
     /*
     // MARK: - Navigation

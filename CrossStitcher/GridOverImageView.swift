@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class GridOverImageView: UIView {
     var zoomScale: CGFloat = 1 {
@@ -60,9 +61,20 @@ class GridOverImageView: UIView {
         }
     }
     
+    var markedCells: [Int: Int] = [:]{
+        didSet{
+            setNeedsDisplay()
+        }
+    }
+    
+
+    
     var lineColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     let gridLineWidth: CGFloat = 2.0
     
+    var marker1Color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    var marker2Color = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+
     
     override func draw(_ rect: CGRect) {
         //print("I'm drawing ...")
@@ -76,7 +88,7 @@ class GridOverImageView: UIView {
             for row in 0...rows {
                 let path = UIBezierPath()
 
-                let yCoord = yForRow(row: row)//: CGFloat = (gridRect.minY + gridRect.height / CGFloat(rows) * CGFloat(row)) * zoomScale
+                let yCoord = yForRow(row: row)
                 path.move(to: convertToOriginCoordinates(forScreenPoint: CGPoint(x: gridRect.minX * zoomScale,
                                       y: yCoord)) )       // переместить перо в начальную точку
                 path.addLine(to: convertToOriginCoordinates(forScreenPoint: CGPoint(x: gridRect.maxX * zoomScale,
@@ -102,6 +114,29 @@ class GridOverImageView: UIView {
                  path.stroke()
              }
          }
+        
+        // разукрасить раскрашенные ячейки
+        let cellSize = CGSize(width: gridRect.width / CGFloat(columns), height: gridRect.height / CGFloat(rows))
+        
+        for keyAndValue in markedCells {
+            let column = keyAndValue.key % 10000
+            let row = Int( ( keyAndValue.key - column ) / 10000 )
+            
+            // xForColumn и yForRow дают правую и нижнюю границу, значит уменьгим номера при получении координат
+            let startPoint = convertToOriginCoordinates(forScreenPoint: CGPoint(x: xForColumn(column: column - 1), y: yForRow(row: row - 1)))
+            
+            let path = UIBezierPath()
+            path.move(to: startPoint)
+            path.addLine(to: CGPoint(x: startPoint.x + cellSize.width, y: startPoint.y))
+            path.addLine(to: CGPoint(x: startPoint.x + cellSize.width, y: startPoint.y + cellSize.height))
+            path.addLine(to: CGPoint(x: startPoint.x, y: startPoint.y + cellSize.height))
+            path.close()
+            
+            let colorForCell = keyAndValue.value == 1 ? marker1Color : marker2Color
+            colorForCell.setFill()
+            
+            path.fill(with: CGBlendMode.normal, alpha: 0.5)
+        }
     }
     
     func yForRow(row : Int) -> CGFloat {
@@ -124,6 +159,25 @@ class GridOverImageView: UIView {
         case 1: return point
         default:
             return CGPoint(x: point.x / zoomScale, y: point.y / zoomScale)
+        }
+    }
+    
+    func cellForPoint(point: CGPoint) -> (row: Int, column: Int) {
+        //let screenPoint = convertToScreenCoordinates(forPoint: point)
+        var column = Int( ( point.x - gridRect.minX ) / gridRect.width * CGFloat(columns) ) + 1
+        column = max( min(column, columns), 0 )
+        var row = Int( ( point.y - gridRect.minY ) / gridRect.height * CGFloat(rows) ) + 1
+        row = max( min( row, rows ), 0 )
+        
+        return (row: row, column: column)
+    }
+    
+    func changeMark(atCell cell: (row: Int, column: Int), withMark mark: Int) {
+        let cellAddress = cell.row * 10000 + cell.column
+        if markedCells[cellAddress] != mark {
+            markedCells[cellAddress] = mark
+        } else {
+            markedCells.removeValue(forKey: cellAddress)
         }
     }
     

@@ -19,7 +19,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhZ-gS-WpT" customClass="CrossStitchView" customModule="CrossStitcher" customModuleProvider="target">
                                 <rect key="frame" x="20" y="105" width="728" height="899"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" minimumZoomScale="0.5" maximumZoomScale="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vdb-Gi-FBe">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" minimumZoomScale="0.20000000000000001" maximumZoomScale="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vdb-Gi-FBe">
                                         <rect key="frame" x="50" y="30" width="678" height="869"/>
                                     </scrollView>
                                 </subviews>
@@ -104,7 +104,7 @@
                             <outlet property="delegate" destination="6AR-Vl-ZsN" id="UgR-Ze-Eco"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="CRoss Stitches" id="1lq-UQ-d7N">
+                    <navigationItem key="navigationItem" title="Cross Stitches" id="1lq-UQ-d7N">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="b6m-AC-H3x">
                             <connections>
                                 <segue destination="QEg-Sr-nwi" kind="show" identifier="addItem" id="aOE-nk-0d3"/>
