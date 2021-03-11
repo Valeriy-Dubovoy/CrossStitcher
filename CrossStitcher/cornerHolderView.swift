@@ -29,32 +29,37 @@ class cornerHolderView: UIView {
         bounds = CGRect(x: 0, y: 0, width: viewSize, height: viewSize)
     }
     
-    private let viewSize = 30
-    private let lineWidth = 4
-    var lineColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+    private let viewSize: CGFloat = 30.0
+    @IBInspectable private let lineWidth: CGFloat = 4.0
+    @IBInspectable var lineColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
 
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
+        
         // обведем рамку
         let path = UIBezierPath()
 
         let lineOffset = lineWidth / 2
-        path.move(to: CGPoint(x: lineOffset,
-                              y: lineOffset))        // переместить перо в начальную точку
-        path.addLine(to: CGPoint(x: lineOffset,
-                                 y: viewSize - lineOffset))    // нарисовать линию
-        path.addLine(to: CGPoint(x: viewSize - lineOffset,
-                                 y: viewSize - lineOffset))    // нарисовать линию
-        path.addLine(to: CGPoint(x: viewSize - lineOffset,
-                                 y: lineOffset))    // нарисовать линию
-        path.addLine(to: CGPoint(x: lineOffset,
-                                 y: lineOffset))    // нарисовать линию
-
+        let halfOfView = viewSize / 2
+        path.addArc(withCenter: CGPoint(x: halfOfView, y: halfOfView), radius: halfOfView - lineOffset, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+        
         lineColor.setStroke()
         path.lineWidth = CGFloat(lineWidth)
         //path.fill()                            // отображаем
         path.stroke()
     }
 
+    internal func drawRingFittingInsideView(rect: CGRect)->() {
+        let hw:CGFloat = lineWidth/2
+        let circlePath = UIBezierPath(ovalIn: rect.insetBy(dx: hw,dy: hw) )
+
+        let shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = UIColor.clear.cgColor
+            shapeLayer.strokeColor = lineColor.cgColor
+        shapeLayer.lineWidth = lineWidth
+        layer.addSublayer(shapeLayer)
+    }
 }
+

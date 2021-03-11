@@ -46,10 +46,10 @@ class csListTableViewController: FetchedResultsTableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "crossStitch cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "crossStitch cell", for: indexPath) as! CrossStitchListViewCell
 
-        if let object = fetchedResultController?.object(at: indexPath) {
-            cell.textLabel?.text = (object as? CrossStitch)?.name
+        if let object = fetchedResultController?.object(at: indexPath) as? CrossStitch {
+            cell.configureWith(name: object.name, imageData: object.imageData)
         }
 
         return cell

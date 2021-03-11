@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var timerForSaving: Timer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+
+        stopTimers()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -39,12 +42,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        startTimers()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        stopTimers()
     }
 
+    // MARK: - Timers
+    
+    func startTimers() {
+        if timerForSaving == nil {
+            timerForSaving = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { (withTimer) in
+                try? self.saveContext()
+            })
+        } else {
+            timerForSaving?.fire()
+        }
+    }
+    
+    func stopTimers() {
+        if let _ = timerForSaving {
+            try? saveContext()
+            timerForSaving?.invalidate()
+            timerForSaving = nil
+        }
+    }
+    
     // MARK: - Core Data stack
 
     lazy var applicationDocumentDirectory: URL = {
@@ -53,7 +79,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls.first! as URL
     }()
-
+    
+    var iCloudInUse = false
 
     /*A URL pointing to the specified ubiquity container, or nil if the container could not be located or if iCloud storage is unavailable for the current user or device.
 
@@ -98,8 +125,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var urlForDatbase: URL
         
+        self.iCloudInUse = false
+        
+        // если iCloud token существует, значит iCloud включено и активно
+        if let _ = self.ubiquityIdentityToken {
+            self.iCloudInUse = true
+
+            //let queue = DispatchQueue.global(qos: .utility)
+            //queue.async{
+            //    if let data = try? Data(contentsOf: imageURL){
+            //        DispatchQueue.main.async {
+            //            image.image = UIImage(data: data)
+            //             print("Show image data")
+            //        }
+            //        print("Did download  image data")
+            //    }
+            //}
+        }
+        
+        let iCloudState = self.iCloudInUse ? "on" : "off"
+        print("iCloud is \(iCloudState)")
+
         do {
-            var documentDirectory = try FileManager.default.url(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
+            var documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             
             urlForDatbase = documentDirectory.appendingPathComponent("CrossStitcher.sqllite")
         } catch let error {
@@ -109,15 +157,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let storeOptions: [String : Any] = [
-        NSMigratePersistentStoresAutomaticallyOption:NSNumber(booleanLiteral: true),
-        NSInferMappingModelAutomaticallyOption:NSNumber(booleanLiteral: true)]
-        
+        NSMigratePersistentStoresAutomaticallyOption:NSNumber(true),
+        NSInferMappingModelAutomaticallyOption:NSNumber(true)]
         
         do{
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
                                                configurationName: nil,
                                                at: urlForDatbase,
-                                               options: [NSMigratePersistentStoresAutomaticallyOption:NSNumber(true), NSInferMappingModelAutomaticallyOption:NSNumber(true)])
+                                               options: storeOptions)
         } catch let error {
             //error будет содержать информацию об ошибку - объект, поддерживающий протокол Error(типа NSError)
             // обычно это enum, в котором есть асоциированные данные об ошибке
@@ -202,10 +249,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+                print("Data saved")
+
             } catch {
+                NSLog("Error saving database: \(error.localizedDescription)")
                 throw error
-                //let nserror = error as NSError
-                //fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
         

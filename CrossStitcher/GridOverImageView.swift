@@ -61,23 +61,20 @@ class GridOverImageView: UIView {
         }
     }
     
-    var markedCells: [Int: Int] = [:]{
+
+    
+    var lineColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+    {
         didSet{
             setNeedsDisplay()
         }
     }
-    
 
-    
-    var lineColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     let gridLineWidth: CGFloat = 2.0
     
-    var marker1Color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-    var marker2Color = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-
-    
+    // MARK: Drawing
     override func draw(_ rect: CGRect) {
-        //print("I'm drawing ...")
+        //print("Start drawing at\(Date())")
         // вывести картинку
         if let img = image {
             img.draw(in: CGRect(x: 0, y: 0, width: originalSize.width, height: originalSize.height))
@@ -119,11 +116,10 @@ class GridOverImageView: UIView {
         let cellSize = CGSize(width: gridRect.width / CGFloat(columns), height: gridRect.height / CGFloat(rows))
         
         for keyAndValue in markedCells {
-            let column = keyAndValue.key % 10000
-            let row = Int( ( keyAndValue.key - column ) / 10000 )
+            let cell = keyAndValue.key
             
-            // xForColumn и yForRow дают правую и нижнюю границу, значит уменьгим номера при получении координат
-            let startPoint = convertToOriginCoordinates(forScreenPoint: CGPoint(x: xForColumn(column: column - 1), y: yForRow(row: row - 1)))
+            // xForColumn и yForRow дают правую и нижнюю границу, значит уменьшим номера при получении координат
+            let startPoint = convertToOriginCoordinates(forScreenPoint: CGPoint(x: xForColumn(column: cell.column - 1), y: yForRow(row: cell.row - 1)))
             
             let path = UIBezierPath()
             path.move(to: startPoint)
@@ -137,8 +133,10 @@ class GridOverImageView: UIView {
             
             path.fill(with: CGBlendMode.normal, alpha: 0.5)
         }
+        //print("Stop drawing at\(Date())")
     }
     
+    //MARK: Coordinate system
     func yForRow(row : Int) -> CGFloat {
         return (gridRect.minY + gridRect.height / CGFloat(rows) * CGFloat(row)) * zoomScale
     }
@@ -162,25 +160,59 @@ class GridOverImageView: UIView {
         }
     }
     
-    func cellForPoint(point: CGPoint) -> (row: Int, column: Int) {
+    func cellForPoint(point: CGPoint) -> GridCell {
         //let screenPoint = convertToScreenCoordinates(forPoint: point)
         var column = Int( ( point.x - gridRect.minX ) / gridRect.width * CGFloat(columns) ) + 1
-        column = max( min(column, columns), 0 )
+        column = max( min(column, columns), 1 )
         var row = Int( ( point.y - gridRect.minY ) / gridRect.height * CGFloat(rows) ) + 1
-        row = max( min( row, rows ), 0 )
+        row = max( min( row, rows ), 1 )
         
-        return (row: row, column: column)
+        return GridCell(row: row, column: column)
     }
     
-    func changeMark(atCell cell: (row: Int, column: Int), withMark mark: Int) {
-        let cellAddress = cell.row * 10000 + cell.column
-        if markedCells[cellAddress] != mark {
-            markedCells[cellAddress] = mark
-        } else {
-            markedCells.removeValue(forKey: cellAddress)
+    //MARK: marked ceolls
+    
+    var markedCells: [GridCell: Int] = [:]{
+        didSet{
+            setNeedsDisplay()
         }
     }
     
+    var marker1Color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    {
+        didSet{
+            setNeedsDisplay()
+        }
+    }
+    var marker2Color = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+    {
+        didSet{
+            setNeedsDisplay()
+        }
+    }
+
+    func changeMark(atCell cell: GridCell, withMark mark: Int) {
+        if markedCells[cell] != mark {
+            markedCells[cell] = mark
+        } else {
+            markedCells.removeValue(forKey: cell)
+        }
+    }
+    
+    func getMarkValue(forCell cell: GridCell) -> Int? {
+        return markedCells[cell]
+    }
+    
+    func setMarkValue(forCell cell: GridCell, withMark mark: Int?) {
+        if mark == nil {
+            markedCells.removeValue(forKey: cell)
+        } else {
+            markedCells[cell] = mark
+        }
+        
+    }
+
+    //MARK: view overrides
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentMode = .redraw

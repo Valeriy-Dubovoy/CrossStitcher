@@ -9,7 +9,8 @@
 import UIKit
 //import Foundation
 
-class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate, SwiftColorPickerDelegate {
+    
 
     // MARK: controller Events
     
@@ -37,27 +38,18 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
             self.rearrangeLabels()
         }
     }
-    
-    var timerForSaving: Timer?
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        if timerForSaving == nil {
-//            timerForSaving = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { (withTimer) in
-//                print("timer is active")
-//                self.csDBObject?.updateFromCrossStitchObject(self.crossStitchObject, inViewContorller: self)
-//            })
-//        }
         
-        timerForSaving?.fire()
-        super.viewWillAppear(animated)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         // перед закрытием окна сохраним изменения
-        timerForSaving?.invalidate()
         csDBObject?.updateFromCrossStitchObject(crossStitchObject, inViewContorller: self)
         
         super.viewWillDisappear(animated)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        markedCellsCache = [:]
+        pannedCells = [:]
+        csDBObject?.updateFromCrossStitchObject(crossStitchObject, inViewContorller: self)
     }
     
     var csDBObject: CrossStitch?
@@ -72,8 +64,12 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
                 if let sImage = csObj.schemaImage {
                     image = sImage
                 }
+            zoomableImageView.marker1Color = csObj.marker1Color
+            zoomableImageView.marker2Color = csObj.marker2Color
+            zoomableImageView.lineColor = csObj.gridColor
+
             
-            zoomableImageView.markedCells = convertStringMarkersToDictionary(stringMarkers: csDBObject?.markedCells)
+            zoomableImageView.markedCells = convertStringMarkersToDictionary(stringMarkers: csObj.markedCells)
             
             if gridScrollView != nil {
                 initColumnsLabels()
@@ -371,13 +367,16 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
     }
     
     // MARK: - Marker mode
+    var panGestureRecognizer: UIPanGestureRecognizer?
     
     private func startMarkerMode() {
-//        let panGestureRecognizer = UIPanGestureRecognizer(
-//                    target: self,
-//                    action: #selector(self.markerModePanGestureHandler)
-//            )
-//        zoomableImageView.addGestureRecognizer( panGestureRecognizer )
+        panGestureRecognizer = UIPanGestureRecognizer(
+                    target: self,
+                    action: #selector(self.markerModePanGestureHandler)
+            )
+        panGestureRecognizer?.maximumNumberOfTouches = 1
+        gridScrollView.addGestureRecognizer( panGestureRecognizer! )
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.markerModeTapGestureHandler))
         tapGestureRecognizer.numberOfTapsRequired = 1
         tapGestureRecognizer.numberOfTouchesRequired = 1
@@ -390,22 +389,15 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
             for gesture in gridScrollView.gestureRecognizers! {
                 if gesture.isKind(of: UITapGestureRecognizer.self) {
                     gridScrollView.removeGestureRecognizer(gesture)
+                } else if gesture == panGestureRecognizer {
+                    gridScrollView.removeGestureRecognizer(gesture)
+                    panGestureRecognizer = nil
                 }
             }
 
         }
     }
     
-    
-    @objc func markerModeTapGestureHandler( recognizer: UITapGestureRecognizer ) {
-        if recognizer.state == .ended {
-            let pointOfTap = recognizer.location(in: zoomableImageView)
-            let cell = zoomableImageView.cellForPoint(point: pointOfTap)
-            zoomableImageView.changeMark(atCell: cell, withMark: self.mode == .marker1 ? 1 : 2)
-            
-            csDBObject?.markedCells = convertMakersToString()
-        }
-    }
     
     func convertMakersToString() -> String {
         let encoder = JSONEncoder()
@@ -418,8 +410,8 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
         return "{}"
     }
     
-    func convertStringMarkersToDictionary(stringMarkers: String?) -> [Int: Int] {
-        let emptyResult :[Int: Int] = [:]
+    func convertStringMarkersToDictionary(stringMarkers: String?) -> [GridCell: Int] {
+        let emptyResult :[GridCell: Int] = [:]
         
         if stringMarkers == nil {
             return emptyResult
@@ -427,36 +419,105 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
         
         let decoder = JSONDecoder()
         if let decodableString = stringMarkers!.data(using: .utf8) {
-            let dict = try? decoder.decode([Int: Int].self, from: decodableString)
+            let dict = try? decoder.decode([GridCell: Int].self, from: decodableString)
             
             return  dict ?? emptyResult
         }
         return emptyResult
     }
+
+    // MARK: - Tap gesture in Mark mode
+    @objc func markerModeTapGestureHandler( recognizer: UITapGestureRecognizer ) {
+        if recognizer.state == .ended {
+            let pointOfTap = recognizer.location(in: zoomableImageView)
+            let cell = zoomableImageView.cellForPoint(point: pointOfTap)
+            zoomableImageView.changeMark(atCell: cell, withMark: self.mode == .marker1 ? 1 : 2)
+            print("cell \(cell)")
+            
+            crossStitchObject.markedCells = convertMakersToString()
+        }
+    }
     
-    /*
+    // MARK: - Pan festure in Mark mode
+    
+    var pannedCells: [GridCell: Int?] = [:]   //будем запоминать ячейки и их отметки, чтобы их туда-сюда не красить пока чрез нее движемся
+    var timerForPanService: Timer?
+    var markedCellsCache: [GridCell: Int] = [:] // будем кэшировать изменения, чтобы уменьшить количество отрисовок. По таймеру выкладывать кэш
+    
     @objc func markerModePanGestureHandler( recognizer: UIPanGestureRecognizer ) {
         // Get the changes in the X and Y directions relative to
         // the superview's coordinate space.
-        //let translation = recognizer.translation(in: zoomableImageView.superview)
+        if recognizer.numberOfTouches != 1 {
+            return
+        }
+        //остановим текущий таймер, если действия происходят очень быстро
+        stopTimerForPanService()
         
+        let pointOfTap = recognizer.location(in: zoomableImageView)
+        //print("Point \(pointOfTap) at \(Date())")
+
         switch recognizer.state {
-            case .began:
-                //markerPanned = []
-            break
             case .cancelled:
+                print("state = cancel")
                 // отменить все выделения?
-                break
-            case .changed: fallthrough    //"fallthrough" = выполнить код для следующего case (можно так же писать "case .changed, .ended:" )
+                for keyAndValue in pannedCells {
+                    zoomableImageView.setMarkValue(forCell: keyAndValue.key, withMark: keyAndValue.value)
+                }
+                //очистим буфер
+                pannedCells = [:]
+ 
+            case .began:
+                // готовим буфер
+                pannedCells = [:]
+                markedCellsCache = zoomableImageView.markedCells
+                fallthrough    //"fallthrough" = выполнить код для следующего case (можно так же писать "case .changed, .ended:" )
+            case .changed:
+                fallthrough    //"fallthrough" = выполнить код для следующего case (можно так же писать "case .changed, .ended:" )
             case .ended:
                 //определить по координатам ячейку и установить отметку
-//                let newCenter = CGPoint(x: initialCenter.x + translation.x, y: initialCenter.y + translation.y)
-//                holder.center = newCenter
-                //recognizer.setTranslation(CGPoint.zero, in: holder)
+                let cell = zoomableImageView.cellForPoint(point: pointOfTap)
+                if self.pannedCells[cell] == nil {
+                    print("cell \(cell)")
+                    // has not panned yet
+                    // so add to list of panned
+                    self.pannedCells[cell] = markedCellsCache[cell]
+                    // and change mark
+                    changeMark(atCell: cell, withMark: self.mode == .marker1 ? 1 : 2)
+                }
+                // стартуем таймер
+                startTimerForPanService()
                 break
             default: break
         }
-    }*/
+    }
+  
+    func changeMark(atCell cell: GridCell, withMark mark: Int) {
+        if markedCellsCache[cell] != mark {
+            markedCellsCache[cell] = mark
+        } else {
+            markedCellsCache.removeValue(forKey: cell)
+        }
+    }
+
+    func stopTimerForPanService() {
+        if let _ = timerForPanService {
+            timerForPanService?.invalidate()
+            timerForPanService = nil
+        }
+    }
+    
+    func startTimerForPanService() {
+        if timerForPanService == nil {
+            timerForPanService = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (withTimer) in
+                //print("global saving")
+                self.zoomableImageView.markedCells = self.markedCellsCache
+                self.stopTimerForPanService()
+                self.crossStitchObject.markedCells = self.convertMakersToString()
+            })
+        } else {
+            timerForPanService?.fire()
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -468,7 +529,108 @@ class crossStitchViewController: UIViewController, UIScrollViewDelegate, UIGestu
     }
     */
 
-}
+    var colorForMarker: Int = 0
+
+    // MARK: - Settings
+    // Delegate for Color Picker
+    func colorSelectionChanged(selectedColor color: UIColor) {
+        if colorForMarker == 1 {
+            crossStitchObject.marker1Color = color
+            zoomableImageView.marker1Color = color}
+        else if colorForMarker == 2 {
+            crossStitchObject.marker2Color = color
+            zoomableImageView.marker2Color = color}
+        else if colorForMarker == 3 {
+            crossStitchObject.gridColor = color
+            zoomableImageView.lineColor = color}
+    }
+
+    @IBAction func settingsButtonPressed(_ sender: UIButton) {
+        let alertTitle = NSLocalizedString("Settings", comment: "")
+        let alertMessage = NSLocalizedString("", comment: "")
+        
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = sender
+        //alert.popoverPresentationController?.sourceRect = sender.frame
+
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Choose marker 1 Color", comment: ""), style: .default, handler:
+                { _ in
+                    self.colorForMarker = 1
+                    self.startGettingColor(sender: sender)
+                }
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Choose marker 2 Color", comment: ""), style: .default, handler:
+                { _ in
+                    self.colorForMarker = 2
+                    self.startGettingColor(sender: sender)
+                }
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Choose grid line Color", comment: ""), style: .default, handler:
+                { _ in
+                    self.colorForMarker = 3
+                    self.startGettingColor(sender: sender)
+                }
+            )
+        )
+
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Clear marker 1", comment: ""), style: .default, handler:
+                { _ in
+                    self.markedCellsCache = self.zoomableImageView.markedCells
+                    self.markedCellsCache = self.markedCellsCache.filter({ (key: GridCell, value: Int) -> Bool in
+                        value != 1
+                    })
+                    self.zoomableImageView.markedCells = self.markedCellsCache
+                    self.crossStitchObject.markedCells = self.convertMakersToString()
+                }
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Clear marker 2", comment: ""), style: .default, handler:
+                { _ in
+                    self.markedCellsCache = self.zoomableImageView.markedCells
+                    self.markedCellsCache = self.markedCellsCache.filter({ (key: GridCell, value: Int) -> Bool in
+                        value != 2
+                    })
+                    self.zoomableImageView.markedCells = self.markedCellsCache
+                    self.crossStitchObject.markedCells = self.convertMakersToString()
+                }
+            )
+        )
+
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("Cancel", comment: "Default action"), style: .cancel, handler: nil)
+        )
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func startGettingColor(sender: UIButton) {
+        let colorPickerVC = SwiftColorPickerViewController()
+        
+        colorPickerVC.delegate = self
+        //colorPickerVC.dataSource = self
+        colorPickerVC.modalPresentationStyle = .popover
+        let popVC = colorPickerVC.popoverPresentationController!;
+        popVC.sourceRect = sender.frame
+        popVC.sourceView = self.view
+        popVC.permittedArrowDirections = .any;
+        popVC.delegate = self as? UIPopoverPresentationControllerDelegate;
+        
+        self.present(colorPickerVC, animated: true, completion: {
+            // print("Reade<");
+        })
+    }
+    
+ }
 
 enum vcMode: Int {
     case scene = 0

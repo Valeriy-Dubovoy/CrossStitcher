@@ -18,14 +18,17 @@ class CrossStitch: NSManagedObject {
     }
     
     func updateFromCrossStitchObject(_ crossStitchObject : CrossStitchObject, inViewContorller vc: UIViewController) {
-        print("db Update")
         gridRows = Int16(crossStitchObject.rows)
         gridColumns = Int16(crossStitchObject.columns)
         gridRectX = Float(crossStitchObject.gridRect.minX)
         gridRectY = Float(crossStitchObject.gridRect.minY)
         gridRectWidth = Float(crossStitchObject.gridRect.width)
         gridRectHeight = Float(crossStitchObject.gridRect.height)
-        
+        markedCells = crossStitchObject.markedCells
+        marker1Color = ColorForDatabase(color: crossStitchObject.marker1Color).name
+        marker2Color = ColorForDatabase(color: crossStitchObject.marker2Color).name
+        gridColor = ColorForDatabase(color: crossStitchObject.gridColor).name
+
         // save changes
         do {
             try (UIApplication.shared.delegate as? AppDelegate)?.saveContext()

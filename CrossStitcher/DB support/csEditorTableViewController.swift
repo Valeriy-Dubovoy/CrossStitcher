@@ -29,8 +29,15 @@ class csEditorTableViewController: UITableViewController, UIImagePickerControlle
         cancelAction()
     }
     
-    var imageViewWaitingImage: UIImageView?
+    @IBAction func intTextFieldChanged(_ sender: UITextField) {
+        if let intValue = Int(sender.text!) {
+            sender.text = String ( intValue )
+        }
+    }
     
+    
+    var imageViewWaitingImage: UIImageView?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,9 +78,20 @@ class csEditorTableViewController: UITableViewController, UIImagePickerControlle
         csObject!.gridRows = Int16( rowsTextField.text ?? "0" ) ?? 0
         csObject!.gridColumns = Int16( columnsTextField.text ?? "0" ) ?? 0
         
-        csObject?.schemaData = schemaImageView?.image?.pngData()
-        csObject?.imageData = previewImageView?.image?.pngData()
+        csObject!.schemaData = schemaImageView?.image?.pngData()
+        csObject!.imageData = previewImageView?.image?.pngData()
         
+        // update grid rect to place inside image size
+        if let img = schemaImageView?.image {
+            let imageSize = img.size
+            if csObject!.gridRectX > Float(imageSize.width) { csObject!.gridRectX = 0.0 }
+            if ( csObject!.gridRectX + csObject!.gridRectWidth ) > Float(imageSize.width) || csObject!.gridRectWidth == 0
+                { csObject!.gridRectWidth = Float(imageSize.width) - csObject!.gridRectX }
+
+            if csObject!.gridRectY > Float(imageSize.height) { csObject!.gridRectY = 0.0 }
+            if ( csObject!.gridRectY + csObject!.gridRectHeight ) > Float(imageSize.height) || csObject!.gridRectHeight == 0
+                { csObject!.gridRectHeight = Float(imageSize.height) - csObject!.gridRectY }
+        }
         
         do {
             try (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
@@ -107,8 +125,11 @@ class csEditorTableViewController: UITableViewController, UIImagePickerControlle
     func chooseImageForImageView( iview: UIImageView?) {
         let alertTitle = NSLocalizedString("Image source", comment: "")
         let alertMessage = NSLocalizedString("", comment: "")
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
         
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = iview
+        alert.popoverPresentationController?.sourceRect = iview?.frame ?? CGRect()
+
         imageViewWaitingImage = iview
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
@@ -167,13 +188,15 @@ class csEditorTableViewController: UITableViewController, UIImagePickerControlle
         } else {
             imageViewWaitingImage?.image = nil
         }
-        
+                
         self.dismiss(animated: true, completion: nil)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+
+  
     /*
     // MARK: - Navigation
 
