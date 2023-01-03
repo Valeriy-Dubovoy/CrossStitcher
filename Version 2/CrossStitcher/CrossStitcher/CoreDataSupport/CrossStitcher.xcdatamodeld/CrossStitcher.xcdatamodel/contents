@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Marker" representedClassName="Marker" syncable="YES" codeGenerationType="class">
+        <attribute name="column" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="marker" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="row" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="stitch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stitch" inverseName="markers" inverseEntity="Stitch"/>
+    </entity>
+    <entity name="Stitch" representedClassName="Stitch" syncable="YES" codeGenerationType="class">
+        <attribute name="columns" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="markerColor1" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="markerColor2" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="preview" optional="YES" attributeType="Binary"/>
+        <attribute name="rows" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="schema" optional="YES" attributeType="Binary"/>
+        <relationship name="markers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Marker" inverseName="stitch" inverseEntity="Marker"/>
+    </entity>
+</model>
