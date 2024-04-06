@@ -7,20 +7,23 @@
 
 import UIKit
 
-class StitchEditorTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class StitchEditorTableViewController: UITableViewController, SchemaViewControllerProtocol, UINavigationControllerDelegate {
+    var presenter: SchemaViewControllerPresenterProtocol!
     
-    var stitchModel = StitchModel() {
-        didSet {
-            //updateUI() - don't use because it start at every change any property
-        }
-    }
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var rowsTextField: UITextField!
-    @IBOutlet weak var columnstextField: UITextField!
+    @IBOutlet weak var columnsTextField: UITextField!
+    @IBOutlet weak var startRowTextField: UITextField!
+    @IBOutlet weak var startColumnTextField: UITextField!
     
     @IBOutlet weak var schemaImageView: UIImageView!
     @IBOutlet weak var previewImageView: UIImageView!
+    @IBOutlet weak var color1Preview: UIView!
+    @IBOutlet weak var color2Preview: UIView!
     
+    var color1TapRecognizer: UITapGestureRecognizer?
+    var color2TapRecognizer: UITapGestureRecognizer?
+
     @IBAction func intEditChanged(_ sender: UITextField) {
         if let intValue = Int(sender.text ?? "0") {
             sender.text = String ( intValue )
@@ -38,18 +41,20 @@ class StitchEditorTableViewController: UITableViewController, UIImagePickerContr
             return
         }
         
-        stitchModel.set(name: nameTextField.text ?? "")
-        let intRows = Int( rowsTextField?.text ?? "10")
-        stitchModel.set(rows: Int16( intRows ?? 10 ) )
-        stitchModel.set(columns: Int16(columnstextField?.text ?? "1") ?? 1)
+        presenter.name = nameTextField.text ?? ""
+        presenter.rows = Int16( rowsTextField?.text ?? "1") ?? 1
+        presenter.startRow = Int16( startRowTextField?.text ?? "1") ?? 1
+        presenter.columns = Int16( columnsTextField?.text ?? "1") ?? 1
+        presenter.startColumn = Int16( startColumnTextField?.text ?? "1") ?? 1
+        presenter.markerColor1 = color1Preview.backgroundColor ?? Constants.marker1Color()
+        presenter.markerColor2 = color2Preview.backgroundColor ?? Constants.marker2Color()
+        presenter.alfaMarker1 = color1Preview.alpha
+        presenter.alfaMarker2 = color2Preview.alpha
+        presenter.schemaImage = schemaImageView.image
+        presenter.previewImage = previewImageView.image
+  
+        presenter.saveProperties()
 
-        stitchModel.set(schemaImage: schemaImageView.image)
-        stitchModel.set(previewImage: previewImageView.image)
-
-        if stitchModel.stitch == nil {
-            stitchModel.newStitch()
-        }
-        
         do {
             try (UIApplication.shared.delegate as? AppDelegate)?.saveContext(inBackground: false)
             navigationController?.dismiss(animated: true, completion: {})
@@ -72,57 +77,65 @@ class StitchEditorTableViewController: UITableViewController, UIImagePickerContr
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        color1TapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectColor(_:)))
+        color1Preview.addGestureRecognizer(color1TapRecognizer!)
+        color2TapRecognizer = UITapGestureRecognizer(target: self, action: #selector(selectColor(_:)))
+        color2Preview.addGestureRecognizer(color2TapRecognizer!)
+
         updateUI()
     }
 
     func updateUI() {
-        nameTextField?.text = stitchModel.getName()
-        rowsTextField?.text = String( Int( stitchModel.getRows() ) )
-        columnstextField?.text = String( Int( stitchModel.getColumns() ) )
-        schemaImageView?.image = stitchModel.getSchemaImage()
-        previewImageView?.image = stitchModel.getPreviewImage()
-    }
-    // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 0
-//    }
-
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        switch indexPath.section {
-        case 1:
-            // schema
-            chooseImageForImageView(iview: schemaImageView)
-        case 2:
-            //preview
-            chooseImageForImageView(iview: previewImageView)
-        default:
-            break
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 1:
-            // schema
-            chooseImageForImageView(iview: schemaImageView)
-        case 2:
-            //preview
-            chooseImageForImageView(iview: previewImageView)
-        default:
-            break
-        }
+        nameTextField.text = presenter.name
+        rowsTextField.text = String(presenter.rows)
+        startRowTextField.text = String(presenter.startRow)
+        columnsTextField.text = String(presenter.columns)
+        startColumnTextField.text = String(presenter.startColumn)
+        schemaImageView.image = presenter.schemaImage
+        previewImageView.image = presenter.previewImage
+        
+        color1Preview.backgroundColor = presenter.markerColor1
+        color2Preview.backgroundColor = presenter.markerColor2
+        color1Preview.alpha = presenter.alfaMarker1
+        color2Preview.alpha = presenter.alfaMarker2
+        
     }
   
+    @objc func selectColor(_ sender: UITapGestureRecognizer) {
+        //var colorNumber: Int?
+        var viewForEdit: UIView?
+        var choosenColor = UIColor()
+        //var alfa: CGFloat = 0.5
+        if sender == color1TapRecognizer {
+            //colorNumber = 1
+            choosenColor = color1Preview.backgroundColor ?? Constants.marker1Color()
+            viewForEdit = color1Preview
+        } else if sender == color2TapRecognizer {
+            //colorNumber = 2
+            choosenColor = color2Preview.backgroundColor ?? Constants.marker2Color()
+            viewForEdit = color2Preview
+       }
+        guard viewForEdit != nil else {return }
+
+        let colorPickerView = ViewsAssembler.createColorPickerView(color: choosenColor, alfa: viewForEdit?.alpha ?? 0.5, sampleImage: schemaImageView.image)
+            {color,alfa in
+                //print("Choosen color \(color) with opacity \(alfa)")
+                viewForEdit?.backgroundColor = color
+                viewForEdit?.alpha = alfa
+            }
+
+        self.navigationController?.pushViewController(colorPickerView, animated: true)
+
+    }
+    
     // MARK: Picking up an Image
     private var imageViewWaitingImage: UIImageView?
+}
 
+// MARK: Picking up an Image
+
+extension StitchEditorTableViewController : UIImagePickerControllerDelegate {
+    
     func chooseImageForImageView( iview: UIImageView?) {
         let alertTitle = NSLocalizedString("Image source", comment: "")
         let alertMessage = NSLocalizedString("", comment: "")
@@ -130,36 +143,36 @@ class StitchEditorTableViewController: UITableViewController, UIImagePickerContr
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
         alert.popoverPresentationController?.sourceView = iview
         alert.popoverPresentationController?.sourceRect = iview?.frame ?? CGRect()
-
+        
         imageViewWaitingImage = iview
         
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             alert.addAction(
                 UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .default, handler:
-                    { _ in
-                        self.startGettingImageFrom(sourceType: .camera)
-                    }
-                )
+                                { _ in
+                                    self.startGettingImageFrom(sourceType: .camera)
+                                }
+                             )
             )
         }
         
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
             alert.addAction(
                 UIAlertAction(title: NSLocalizedString("Photo album", comment: ""), style: .default, handler:
-                    { _ in
-                        self.startGettingImageFrom(sourceType: .savedPhotosAlbum)
-                    }
-                )
+                                { _ in
+                                    self.startGettingImageFrom(sourceType: .savedPhotosAlbum)
+                                }
+                             )
             )
         }
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             alert.addAction(
                 UIAlertAction(title: NSLocalizedString("Photo library", comment: ""), style: .default, handler:
-                    { _ in
-                        self.startGettingImageFrom(sourceType: .photoLibrary)
-                    }
-                )
+                                { _ in
+                                    self.startGettingImageFrom(sourceType: .photoLibrary)
+                                }
+                             )
             )
         }
         
@@ -189,24 +202,42 @@ class StitchEditorTableViewController: UITableViewController, UIImagePickerContr
         } else {
             imageViewWaitingImage?.image = nil
         }
-                
+        
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @objc func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+}
 
-  
+extension StitchEditorTableViewController {
+    // MARK: - Table view data source
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            // schema
+            chooseImageForImageView(iview: schemaImageView)
+        case 3:
+            //preview
+            chooseImageForImageView(iview: previewImageView)
+        default:
+            break
+        }
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            // schema
+            chooseImageForImageView(iview: schemaImageView)
+        case 3:
+            //preview
+            chooseImageForImageView(iview: previewImageView)
+        default:
+            break
+        }
+    }
 
 }

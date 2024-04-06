@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension Stitch {
+extension DBStitch {
     
     static public override func entity() -> NSEntityDescription {
         let description = NSEntityDescription.entity(forEntityName: entityName(), in: AppDelegate.viewContext)!
@@ -17,7 +17,7 @@ extension Stitch {
    }
     
     static func entityName() -> String {
-        return "Stitch"
+        return "DBStitch"
     }
     
     static func entityDescription() -> NSEntityDescription {
@@ -26,7 +26,18 @@ extension Stitch {
         return description
     }
     
-    static func newObject() -> Stitch {
-        return NSEntityDescription.insertNewObject(forEntityName: entityName(), into: AppDelegate.viewContext) as! Stitch
+    static func newObject() -> DBStitch {
+        return NSEntityDescription.insertNewObject(forEntityName: entityName(), into: AppDelegate.viewContext) as! DBStitch
     }
+}
+
+extension DBMarkedItem {
+    static func entityName() -> String {
+        return "DBMarkedItem"
+    }
+    
+    static func newObject() -> DBMarkedItem {
+        return NSEntityDescription.insertNewObject(forEntityName: entityName(), into: AppDelegate.viewContext) as! DBMarkedItem
+    }
+
 }

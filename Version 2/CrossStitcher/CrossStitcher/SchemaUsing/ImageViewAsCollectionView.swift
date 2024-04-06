@@ -21,38 +21,12 @@ private let minScale: CGFloat = 0.2
 
 class ImageViewAsCollectionView: UIView {
 
-    //var stitchModel: StitchModel!
-    
     // public API
-    var image = UIImage(named: "Example")
-    var rows = 27
-    var columns = 23
+    var presenter: SchemaViewControllerPresenterProtocol!
     
-    var scale:CGFloat = 1.0 {
-        didSet {
-            if scale > maxScale {
-                scale = oldValue
-            } else if scale < minScale {
-                scale = oldValue
-            }
-            
-            if oldValue != scale {
-                collectionView.collectionViewLayout = createSchemaLayout()
-            }
-        }
-    }
-    
-    var delegete: SchemaCollectionViewDelegate?
-    
-    // private
-    
-    // for pinch gesture
-    private var startPinchScale: CGFloat = 0.0
-    
-    func startWith(stitchModel: StitchModel) {
-        image = stitchModel.getSchemaImage()
-        rows = Int( stitchModel.getRows() )
-        columns = Int( stitchModel.getColumns() )
+    func startWith(presenter: SchemaViewControllerPresenterProtocol) {
+        self.presenter = presenter
+        self.scale = presenter.lastZoom
         
         initRowsLabels()
         initColumnsLabels()
@@ -66,12 +40,40 @@ class ImageViewAsCollectionView: UIView {
 
     }
     
+
+    var scale:CGFloat = 1.0 {
+        didSet {
+            if scale > maxScale {
+                scale = oldValue
+            } else if scale < minScale {
+                scale = oldValue
+            }
+            
+            if oldValue != scale {
+                collectionView.collectionViewLayout = createSchemaLayout()
+                presenter.lastZoom = scale
+            }
+        }
+    }
+    
+    func updateCells(cells: [IndexPath]) {
+        collectionView.reconfigureItems(at: cells)
+    }
+    
+    var delegete: SchemaCollectionViewProtocol?
+    
+    // private
+    
+    // for pinch gesture
+    private var startPinchScale: CGFloat = 0.0
+    
+    
     func didChangeLayout() {
         rearrangeLabels()
     }
 
-    var cellHeight: CGFloat { return (image?.size.height ?? 0.0) / CGFloat(rows) * scale}
-    var cellWidth: CGFloat { return (image?.size.width ?? 0.0) / CGFloat(columns) * scale}
+    var cellHeight: CGFloat { return (presenter.schemaImage?.size.height ?? 0.0) / CGFloat(presenter.rows) * scale}
+    var cellWidth: CGFloat { return (presenter.schemaImage?.size.width ?? 0.0) / CGFloat(presenter.columns) * scale}
 
     private lazy var collectionView: UICollectionView = {
         let cvFrame = CGRect(x: rowsMarksHeaderWidth,
@@ -113,15 +115,15 @@ extension ImageViewAsCollectionView {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: itemInsets, leading: itemInsets, bottom: itemInsets, trailing: itemInsets)
                 
-        let tenColumnsCount: Int = columns / 10
-        let restColumnsCount: Int = columns % 10
+        let tenColumnsCount = presenter.columns / 10
+        let restColumnsCount = presenter.columns % 10
         
         var restHorizontalGroup: NSCollectionLayoutGroup?
 
         if restColumnsCount > 0 {
             let restHorizontalGroupSize = NSCollectionLayoutSize(widthDimension: .absolute((cellWidth + interItemSpacing ) * CGFloat(restColumnsCount) ),
                                                    heightDimension: .absolute(cellHeight))
-            restHorizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: restHorizontalGroupSize, subitem: item, count: restColumnsCount)
+            restHorizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: restHorizontalGroupSize, subitem: item, count: Int(restColumnsCount))
             restHorizontalGroup?.interItemSpacing = .fixed( interItemSpacing )
         }
     
@@ -141,7 +143,7 @@ extension ImageViewAsCollectionView {
             horizontalSize = ( horizontalSize + inter10ItemsSpacing ) * CGFloat( tenColumnsCount )
             groupSize = NSCollectionLayoutSize(widthDimension: .absolute(horizontalSize),
                                                    heightDimension: .absolute(cellHeight))
-            horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: horizontalGroup!, count: tenColumnsCount)
+            horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: horizontalGroup!, count: Int(tenColumnsCount))
             horizontalGroup?.interItemSpacing = .fixed( inter10ItemsSpacing )
             
             if restColumnsCount > 0 {
@@ -159,15 +161,15 @@ extension ImageViewAsCollectionView {
             horizontalSize = (cellWidth + interItemSpacing ) * CGFloat(restColumnsCount)
         }
       
-        let tenRowsCount: Int = rows / 10
-        let restRowsCount: Int = rows % 10
+        let tenRowsCount = presenter.rows / 10
+        let restRowsCount = presenter.rows % 10
 
         var restVerticalGroup: NSCollectionLayoutGroup?
 
         if restRowsCount > 0 {
             let restVerticalGroupSize = NSCollectionLayoutSize(widthDimension: .absolute(horizontalSize),
                                                    heightDimension: .absolute((cellHeight + interItemSpacing) * CGFloat( restRowsCount)))
-            restVerticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: restVerticalGroupSize, subitem: horizontalGroup!, count: restRowsCount)
+            restVerticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: restVerticalGroupSize, subitem: horizontalGroup!, count: Int(restRowsCount))
             restVerticalGroup?.interItemSpacing = .fixed( interItemSpacing )
         }
 
@@ -207,7 +209,7 @@ extension ImageViewAsCollectionView: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return columns * rows
+        return Int(presenter.columns * presenter.rows)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -254,11 +256,12 @@ extension ImageViewAsCollectionView {
         
         columsLabels = []
         
-        for column in 1...columns/10 {
+        for column in 0...presenter.columns/10 {
             
             let newLabel = UILabel(frame: CGRect())
             self.addSubview(newLabel)
-            newLabel.text = "\(column * 10)"
+            let columnNumber = column * 10 + (presenter.startColumn - 1)
+            newLabel.text = "\(columnNumber)"
             newLabel.sizeToFit()
             setCenterForColumnLabel(newLabel, inColumn: column)
             
@@ -272,11 +275,12 @@ extension ImageViewAsCollectionView {
            label.removeFromSuperview()
         }
         rowsLabels = []
-        for row in 1...rows/10 {
+        for row in 0...presenter.rows/10 {
             
             let newLabel = UILabel(frame: CGRect())
             self.addSubview(newLabel)
-            newLabel.text = "\(row * 10)"
+            let rowNumber = row * 10 + (presenter.startRow - 1)
+            newLabel.text = "\(rowNumber)"
             newLabel.sizeToFit()
             setCenterForRowLabel(newLabel, inRow: row)
             
@@ -285,22 +289,22 @@ extension ImageViewAsCollectionView {
     }
     
     private func rearrangeLabels() {
-        for column in 1...columns/10 {
-            let newLabel = columsLabels[column - 1]
+        for column in 0...presenter.columns/10 {
+            let newLabel = columsLabels[Int(column)]
             setCenterForColumnLabel(newLabel, inColumn: column)
         }
         
-        for row in 1...rows/10 {
-            let newLabel = rowsLabels[row - 1]
+        for row in 0...presenter.rows/10 {
+            let newLabel = rowsLabels[Int(row)]
             setCenterForRowLabel(newLabel, inRow: row)
         }
     }
     
-    private func setCenterForRowLabel( _ label: UILabel, inRow row: Int ){
+    private func setCenterForRowLabel( _ label: UILabel, inRow row: Int16 ){
         label.center = CGPoint(x: xPointForRowLabel( label ), y: yPointForRowLabel(inRow: row * 10) )
     }
     
-    private func setCenterForColumnLabel( _ label: UILabel, inColumn column: Int ) {
+    private func setCenterForColumnLabel( _ label: UILabel, inColumn column: Int16 ) {
         label.center = CGPoint(x: xPointForColumnLabel(inColumn: column * 10), y: yPointForColumnLabel( label ))
     }
     
@@ -308,11 +312,11 @@ extension ImageViewAsCollectionView {
         return collectionView.frame.origin.x - 5 - label.frame.size.width / 2
     }
 
-    private func yPointForRowLabel( inRow row: Int ) -> CGFloat {
+    private func yPointForRowLabel( inRow row: Int16 ) -> CGFloat {
         return collectionView.frame.origin.y + yFor(row: row) - contentOffset.y
     }
 
-    private func xPointForColumnLabel( inColumn column: Int ) -> CGFloat {
+    private func xPointForColumnLabel( inColumn column: Int16 ) -> CGFloat {
         return collectionView.frame.origin.x + xFor(column: column) - contentOffset.x
     }
 
@@ -320,13 +324,13 @@ extension ImageViewAsCollectionView {
         return collectionView.frame.origin.y - 5 - label.frame.size.height / 2
     }
 
-    private func yFor( row: Int ) -> CGFloat {
-        let blocks: Int = row / 10
+    private func yFor( row: Int16 ) -> CGFloat {
+        let blocks: Int16 = row / 10
         return ( cellHeight + interItemSpacing ) * CGFloat( row ) + CGFloat( blocks ) * inter10ItemsSpacing
     }
 
-    private func xFor( column: Int ) -> CGFloat {
-        let blocks: Int = column / 10
+    private func xFor( column: Int16 ) -> CGFloat {
+        let blocks: Int16 = column / 10
         return ( cellWidth + interItemSpacing ) * CGFloat( column ) + CGFloat( blocks ) * inter10ItemsSpacing
     }
 }

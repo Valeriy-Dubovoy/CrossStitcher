@@ -21,6 +21,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     lazy var imageView: UIImageView = {
+        //print("new image view")
         let iv = UIImageView.init(frame: self.frame)
         iv.translatesAutoresizingMaskIntoConstraints = false
         
@@ -35,6 +36,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var viewForMarkerColor: UIView = {
+        //print("new color view")
         let v = UIView.init(frame: self.frame)
         
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -65,5 +67,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return iv
     }()
      */
-    
+//    deinit {
+//        let coordinates = Constants.cellCoordinatesFrom(index: tag)
+//        print("destroy \(coordinates.row) : \(coordinates.column) cell")
+//    }
+        
 }

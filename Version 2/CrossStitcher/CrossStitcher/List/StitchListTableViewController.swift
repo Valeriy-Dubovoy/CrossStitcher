@@ -10,12 +10,12 @@ import CoreData
 
 class StitchListTableViewController: FetchedResultsTableViewController {
     
-    
+    //var presenter:
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let request: NSFetchRequest<Stitch> = Stitch.fetchRequest()
+        let request: NSFetchRequest<DBStitch> = DBStitch.fetchRequest()
         request.sortDescriptors = [
                                    NSSortDescriptor(
                                    key: "name",
@@ -24,7 +24,7 @@ class StitchListTableViewController: FetchedResultsTableViewController {
                                    )
                                 ]
         //request.predicate = NSPredicate(format: "any tweets.text contains[c] %@", mention!)
-        let frc = NSFetchedResultsController<Stitch>(
+        let frc = NSFetchedResultsController<DBStitch>(
             fetchRequest: request,
             managedObjectContext: AppDelegate.viewContext,
             sectionNameKeyPath: nil,
@@ -48,7 +48,7 @@ class StitchListTableViewController: FetchedResultsTableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "stitchCell", for: indexPath) as! StitchTableViewCell
         
-        if let object = fetchedResultController?.object(at: indexPath) as? Stitch {
+        if let object = fetchedResultController?.object(at: indexPath) as? DBStitch {
             cell.config(with: object)
         }
 
@@ -63,7 +63,7 @@ class StitchListTableViewController: FetchedResultsTableViewController {
         if identifier == "show stitcher" {
             if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
                 
-                let object = fetchedResultController?.object(at: indexPath) as? Stitch
+                let object = fetchedResultController?.object(at: indexPath) as? DBStitch
                 if (object?.schema) == nil {
                     return false
                 }
@@ -76,26 +76,30 @@ class StitchListTableViewController: FetchedResultsTableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "addStitch":
-            break
+                let dest = segue.destination as? UINavigationController
+                if let vc = dest?.viewControllers[0] as? SchemaViewControllerProtocol {
+                    let presenter = StitchPresenter(view: vc, dbStitch: nil)
+                    vc.presenter = presenter
+                }
         case "editStitch":
             if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
                 
-                let object = fetchedResultController?.object(at: indexPath)
+                let object = fetchedResultController?.object(at: indexPath) as? DBStitch
                 let dest = segue.destination as? UINavigationController
-                if let vc = dest?.viewControllers[0] as? StitchEditorTableViewController {
-                    vc.stitchModel = StitchModel()
-                    vc.stitchModel.stitch = object as? Stitch
+                if let vc = dest?.viewControllers[0] as? SchemaViewControllerProtocol {
+                    let presenter = StitchPresenter(view: vc, dbStitch: object)
+                    vc.presenter = presenter
                 }
             }
         case "show stitcher":
             if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
                 
-                let object = fetchedResultController?.object(at: indexPath)
+                let object = fetchedResultController?.object(at: indexPath) as? DBStitch
 //                let dest = segue.destination as? UINavigationController
 //                if let vc = dest?.viewControllers[0] as? SchemaViewController {
                 if let vc = segue.destination as? SchemaViewController {
-                    vc.stitchModel = StitchModel()
-                    vc.stitchModel.stitch = object as? Stitch
+                    let presenter = StitchPresenter(view: vc, dbStitch: object)
+                    vc.presenter = presenter
                 }
             }
 
@@ -105,4 +109,11 @@ class StitchListTableViewController: FetchedResultsTableViewController {
     }
 
 
+    @IBAction func testColorPickerAction(_ sender: Any) {
+        let view = ViewsAssembler.createColorPickerView(color: UIColor.green, alfa: 0.5, sampleImage: UIImage(named: "free-icon-embroidery-7076323") )
+            {color,alfa in
+                print("Choosen color \(color) with opacity \(alfa)")
+            }
+        self.navigationController?.pushViewController(view, animated: true)
+    }
 }

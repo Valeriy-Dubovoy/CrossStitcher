@@ -20,7 +20,7 @@ class StitchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func config(with stitch: Stitch){
+    func config(with stitch: DBStitch){
         var newConfig = defaultContentConfiguration()
         newConfig.text = stitch.name
         

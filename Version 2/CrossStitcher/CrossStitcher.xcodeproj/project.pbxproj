@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		681CB1D82908EA22009CA0CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CB1D72908EA22009CA0CB /* AppDelegate.swift */; };
+		681CB1DA2908EA22009CA0CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CB1D92908EA22009CA0CB /* SceneDelegate.swift */; };
+		681CB1DF2908EA23009CA0CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 681CB1DD2908EA23009CA0CB /* Main.storyboard */; };
+		681CB1E22908EA23009CA0CB /* CrossStitcher.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 681CB1E02908EA23009CA0CB /* CrossStitcher.xcdatamodeld */; };
+		681CB1E42908EA25009CA0CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 681CB1E32908EA25009CA0CB /* Assets.xcassets */; };
+		681CB1E72908EA25009CA0CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 681CB1E52908EA25009CA0CB /* LaunchScreen.storyboard */; };
+		681CB1F3290916F3009CA0CB /* StitchListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CB1F2290916F3009CA0CB /* StitchListTableViewController.swift */; };
+		681CB1F52909185E009CA0CB /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CB1F42909185E009CA0CB /* FetchedResultsTableViewController.swift */; };
+		681CB1F729091F77009CA0CB /* StitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681CB1F629091F77009CA0CB /* StitchTableViewCell.swift */; };
+		6829501F2B6FAF6500517484 /* StitchProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829501E2B6FAF6500517484 /* StitchProtocols.swift */; };
+		682950212B6FB72600517484 /* SchemaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682950202B6FB72600517484 /* SchemaPresenter.swift */; };
+		682950242B71040300517484 /* ViewsAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682950232B71040300517484 /* ViewsAssembler.swift */; };
+		682950262B7107A800517484 /* StitchListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682950252B7107A800517484 /* StitchListPresenter.swift */; };
+		68A289E42963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A289E32963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift */; };
+		68A289E62963CB800006D484 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A289E52963CB800006D484 /* UIColor+Ext.swift */; };
+		68C723BE29095D20004838F3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723BD29095D20004838F3 /* Constants.swift */; };
+		68C723C0290A617D004838F3 /* StitchEditorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723BF290A617C004838F3 /* StitchEditorTableViewController.swift */; };
+		68C723C3290BC384004838F3 /* UniversalMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723C2290BC384004838F3 /* UniversalMethods.swift */; };
+		68C723C6290BC6D2004838F3 /* StitchExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723C5290BC6D2004838F3 /* StitchExtentions.swift */; };
+		68C723C9290C029F004838F3 /* ImageViewAsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723C8290C029F004838F3 /* ImageViewAsCollectionView.swift */; };
+		68C723CB290C02AE004838F3 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723CA290C02AE004838F3 /* ImageCollectionViewCell.swift */; };
+		68C723CD290C02BF004838F3 /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723CC290C02BF004838F3 /* SchemaViewController.swift */; };
+		68DACE4E2B8B55BF00BB2AC2 /* ColorPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DACE4D2B8B55BF00BB2AC2 /* ColorPickerModel.swift */; };
+		68DACE522B8B567C00BB2AC2 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DACE502B8B567C00BB2AC2 /* ColorPickerViewController.swift */; };
+		68DACE532B8B567C00BB2AC2 /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68DACE512B8B567C00BB2AC2 /* ColorPickerViewController.xib */; };
+		68DACE562B8B649D00BB2AC2 /* ColorPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DACE552B8B649D00BB2AC2 /* ColorPickerPresenter.swift */; };
+		68DACE592B9309F300BB2AC2 /* ColorChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DACE572B9309F300BB2AC2 /* ColorChooserViewController.swift */; };
+		68DACE5A2B9309F300BB2AC2 /* ColorChooserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68DACE582B9309F300BB2AC2 /* ColorChooserViewController.xib */; };
+		68DACE5F2B935CEF00BB2AC2 /* ColorChooserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DACE5D2B935CEF00BB2AC2 /* ColorChooserTableViewCell.swift */; };
+		68DACE602B935CEF00BB2AC2 /* ColorChooserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68DACE5E2B935CEF00BB2AC2 /* ColorChooserTableViewCell.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		681CB1D42908EA22009CA0CB /* CrossStitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrossStitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		681CB1D72908EA22009CA0CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		681CB1D92908EA22009CA0CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		681CB1DE2908EA23009CA0CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		681CB1E12908EA23009CA0CB /* CrossStitcher.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CrossStitcher.xcdatamodel; sourceTree = "<group>"; };
+		681CB1E32908EA25009CA0CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		681CB1E62908EA25009CA0CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		681CB1E82908EA25009CA0CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		681CB1F2290916F3009CA0CB /* StitchListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchListTableViewController.swift; sourceTree = "<group>"; };
+		681CB1F42909185E009CA0CB /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
+		681CB1F629091F77009CA0CB /* StitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchTableViewCell.swift; sourceTree = "<group>"; };
+		6829501E2B6FAF6500517484 /* StitchProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchProtocols.swift; sourceTree = "<group>"; };
+		682950202B6FB72600517484 /* SchemaPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPresenter.swift; sourceTree = "<group>"; };
+		682950232B71040300517484 /* ViewsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsAssembler.swift; sourceTree = "<group>"; };
+		682950252B7107A800517484 /* StitchListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchListPresenter.swift; sourceTree = "<group>"; };
+		68A289E32963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCollectionViewDelegateProtocol.swift; sourceTree = "<group>"; };
+		68A289E52963CB800006D484 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		68A42B262BC0FA1E004CB18E /* CrossStitcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrossStitcher.entitlements; sourceTree = "<group>"; };
+		68C723BD29095D20004838F3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		68C723BF290A617C004838F3 /* StitchEditorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchEditorTableViewController.swift; sourceTree = "<group>"; };
+		68C723C2290BC384004838F3 /* UniversalMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalMethods.swift; sourceTree = "<group>"; };
+		68C723C5290BC6D2004838F3 /* StitchExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchExtentions.swift; sourceTree = "<group>"; };
+		68C723C8290C029F004838F3 /* ImageViewAsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewAsCollectionView.swift; sourceTree = "<group>"; };
+		68C723CA290C02AE004838F3 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		68C723CC290C02BF004838F3 /* SchemaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
+		68DACE4D2B8B55BF00BB2AC2 /* ColorPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerModel.swift; sourceTree = "<group>"; };
+		68DACE502B8B567C00BB2AC2 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		68DACE512B8B567C00BB2AC2 /* ColorPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerViewController.xib; sourceTree = "<group>"; };
+		68DACE552B8B649D00BB2AC2 /* ColorPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerPresenter.swift; sourceTree = "<group>"; };
+		68DACE572B9309F300BB2AC2 /* ColorChooserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChooserViewController.swift; sourceTree = "<group>"; };
+		68DACE582B9309F300BB2AC2 /* ColorChooserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorChooserViewController.xib; sourceTree = "<group>"; };
+		68DACE5D2B935CEF00BB2AC2 /* ColorChooserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChooserTableViewCell.swift; sourceTree = "<group>"; };
+		68DACE5E2B935CEF00BB2AC2 /* ColorChooserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorChooserTableViewCell.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		681CB1D12908EA22009CA0CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		681CB1CB2908EA22009CA0CB = {
+			isa = PBXGroup;
+			children = (
+				681CB1D62908EA22009CA0CB /* CrossStitcher */,
+				681CB1D52908EA22009CA0CB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		681CB1D52908EA22009CA0CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				681CB1D42908EA22009CA0CB /* CrossStitcher.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		681CB1D62908EA22009CA0CB /* CrossStitcher */ = {
+			isa = PBXGroup;
+			children = (
+				68A42B262BC0FA1E004CB18E /* CrossStitcher.entitlements */,
+				68C723C7290C01DA004838F3 /* SchemaUsing */,
+				68C723BA29095412004838F3 /* Model */,
+				681CB1F1290916CF009CA0CB /* List */,
+				681CB1D72908EA22009CA0CB /* AppDelegate.swift */,
+				681CB1D92908EA22009CA0CB /* SceneDelegate.swift */,
+				68C723C4290BC6A0004838F3 /* CoreDataSupport */,
+				68C723C1290BC358004838F3 /* Universal */,
+				682950232B71040300517484 /* ViewsAssembler.swift */,
+				68DACE4F2B8B55D000BB2AC2 /* ColorPicker */,
+				681CB1DD2908EA23009CA0CB /* Main.storyboard */,
+				681CB1E32908EA25009CA0CB /* Assets.xcassets */,
+				681CB1E52908EA25009CA0CB /* LaunchScreen.storyboard */,
+				681CB1E82908EA25009CA0CB /* Info.plist */,
+			);
+			path = CrossStitcher;
+			sourceTree = "<group>";
+		};
+		681CB1F1290916CF009CA0CB /* List */ = {
+			isa = PBXGroup;
+			children = (
+				681CB1F2290916F3009CA0CB /* StitchListTableViewController.swift */,
+				682950252B7107A800517484 /* StitchListPresenter.swift */,
+				681CB1F629091F77009CA0CB /* StitchTableViewCell.swift */,
+				68C723BF290A617C004838F3 /* StitchEditorTableViewController.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		682950222B6FB73300517484 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				682950202B6FB72600517484 /* SchemaPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		68C723BA29095412004838F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6829501E2B6FAF6500517484 /* StitchProtocols.swift */,
+				68C723BD29095D20004838F3 /* Constants.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		68C723C1290BC358004838F3 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				681CB1F42909185E009CA0CB /* FetchedResultsTableViewController.swift */,
+				68C723C2290BC384004838F3 /* UniversalMethods.swift */,
+				68A289E52963CB800006D484 /* UIColor+Ext.swift */,
+			);
+			path = Universal;
+			sourceTree = "<group>";
+		};
+		68C723C4290BC6A0004838F3 /* CoreDataSupport */ = {
+			isa = PBXGroup;
+			children = (
+				681CB1E02908EA23009CA0CB /* CrossStitcher.xcdatamodeld */,
+				68C723C5290BC6D2004838F3 /* StitchExtentions.swift */,
+			);
+			path = CoreDataSupport;
+			sourceTree = "<group>";
+		};
+		68C723C7290C01DA004838F3 /* SchemaUsing */ = {
+			isa = PBXGroup;
+			children = (
+				68C723CC290C02BF004838F3 /* SchemaViewController.swift */,
+				68C723C8290C029F004838F3 /* ImageViewAsCollectionView.swift */,
+				68C723CA290C02AE004838F3 /* ImageCollectionViewCell.swift */,
+				68A289E32963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift */,
+				682950222B6FB73300517484 /* Presenter */,
+			);
+			path = SchemaUsing;
+			sourceTree = "<group>";
+		};
+		68DACE4F2B8B55D000BB2AC2 /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				68DACE4D2B8B55BF00BB2AC2 /* ColorPickerModel.swift */,
+				68DACE552B8B649D00BB2AC2 /* ColorPickerPresenter.swift */,
+				68DACE542B8B647700BB2AC2 /* View */,
+			);
+			path = ColorPicker;
+			sourceTree = "<group>";
+		};
+		68DACE542B8B647700BB2AC2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				68DACE502B8B567C00BB2AC2 /* ColorPickerViewController.swift */,
+				68DACE512B8B567C00BB2AC2 /* ColorPickerViewController.xib */,
+				68DACE572B9309F300BB2AC2 /* ColorChooserViewController.swift */,
+				68DACE582B9309F300BB2AC2 /* ColorChooserViewController.xib */,
+				68DACE5D2B935CEF00BB2AC2 /* ColorChooserTableViewCell.swift */,
+				68DACE5E2B935CEF00BB2AC2 /* ColorChooserTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		681CB1D32908EA22009CA0CB /* CrossStitcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 681CB1EB2908EA25009CA0CB /* Build configuration list for PBXNativeTarget "CrossStitcher" */;
+			buildPhases = (
+				681CB1D02908EA22009CA0CB /* Sources */,
+				681CB1D12908EA22009CA0CB /* Frameworks */,
+				681CB1D22908EA22009CA0CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CrossStitcher;
+			productName = CrossStitcher;
+			productReference = 681CB1D42908EA22009CA0CB /* CrossStitcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		681CB1CC2908EA22009CA0CB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					681CB1D32908EA22009CA0CB = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 681CB1CF2908EA22009CA0CB /* Build configuration list for PBXProject "CrossStitcher" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 681CB1CB2908EA22009CA0CB;
+			productRefGroup = 681CB1D52908EA22009CA0CB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				681CB1D32908EA22009CA0CB /* CrossStitcher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		681CB1D22908EA22009CA0CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				681CB1E72908EA25009CA0CB /* LaunchScreen.storyboard in Resources */,
+				68DACE5A2B9309F300BB2AC2 /* ColorChooserViewController.xib in Resources */,
+				681CB1E42908EA25009CA0CB /* Assets.xcassets in Resources */,
+				68DACE532B8B567C00BB2AC2 /* ColorPickerViewController.xib in Resources */,
+				681CB1DF2908EA23009CA0CB /* Main.storyboard in Resources */,
+				68DACE602B935CEF00BB2AC2 /* ColorChooserTableViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		681CB1D02908EA22009CA0CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				681CB1F3290916F3009CA0CB /* StitchListTableViewController.swift in Sources */,
+				681CB1D82908EA22009CA0CB /* AppDelegate.swift in Sources */,
+				68C723C0290A617D004838F3 /* StitchEditorTableViewController.swift in Sources */,
+				681CB1F729091F77009CA0CB /* StitchTableViewCell.swift in Sources */,
+				68DACE522B8B567C00BB2AC2 /* ColorPickerViewController.swift in Sources */,
+				68C723C6290BC6D2004838F3 /* StitchExtentions.swift in Sources */,
+				68DACE4E2B8B55BF00BB2AC2 /* ColorPickerModel.swift in Sources */,
+				68DACE562B8B649D00BB2AC2 /* ColorPickerPresenter.swift in Sources */,
+				68DACE592B9309F300BB2AC2 /* ColorChooserViewController.swift in Sources */,
+				68C723CD290C02BF004838F3 /* SchemaViewController.swift in Sources */,
+				6829501F2B6FAF6500517484 /* StitchProtocols.swift in Sources */,
+				681CB1E22908EA23009CA0CB /* CrossStitcher.xcdatamodeld in Sources */,
+				68A289E42963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift in Sources */,
+				681CB1F52909185E009CA0CB /* FetchedResultsTableViewController.swift in Sources */,
+				682950212B6FB72600517484 /* SchemaPresenter.swift in Sources */,
+				68C723C9290C029F004838F3 /* ImageViewAsCollectionView.swift in Sources */,
+				68C723CB290C02AE004838F3 /* ImageCollectionViewCell.swift in Sources */,
+				681CB1DA2908EA22009CA0CB /* SceneDelegate.swift in Sources */,
+				68A289E62963CB800006D484 /* UIColor+Ext.swift in Sources */,
+				68C723BE29095D20004838F3 /* Constants.swift in Sources */,
+				68C723C3290BC384004838F3 /* UniversalMethods.swift in Sources */,
+				682950242B71040300517484 /* ViewsAssembler.swift in Sources */,
+				68DACE5F2B935CEF00BB2AC2 /* ColorChooserTableViewCell.swift in Sources */,
+				682950262B7107A800517484 /* StitchListPresenter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		681CB1DD2908EA23009CA0CB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				681CB1DE2908EA23009CA0CB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		681CB1E52908EA25009CA0CB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				681CB1E62908EA25009CA0CB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		681CB1E92908EA25009CA0CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		681CB1EA2908EA25009CA0CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		681CB1EC2908EA25009CA0CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CrossStitcher/CrossStitcher.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 3ZE6RDM8AN;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CrossStitcher/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.isoftdv.CrossStitcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "CStitcher AH";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		681CB1ED2908EA25009CA0CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CrossStitcher/CrossStitcher.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 3ZE6RDM8AN;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CrossStitcher/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.isoftdv.CrossStitcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "CStitcher AH";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		681CB1CF2908EA22009CA0CB /* Build configuration list for PBXProject "CrossStitcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				681CB1E92908EA25009CA0CB /* Debug */,
+				681CB1EA2908EA25009CA0CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		681CB1EB2908EA25009CA0CB /* Build configuration list for PBXNativeTarget "CrossStitcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				681CB1EC2908EA25009CA0CB /* Debug */,
+				681CB1ED2908EA25009CA0CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		681CB1E02908EA23009CA0CB /* CrossStitcher.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				681CB1E12908EA23009CA0CB /* CrossStitcher.xcdatamodel */,
+			);
+			currentVersion = 681CB1E12908EA23009CA0CB /* CrossStitcher.xcdatamodel */;
+			path = CrossStitcher.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 681CB1CC2908EA22009CA0CB /* Project object */;
+}

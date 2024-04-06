@@ -8,8 +8,10 @@
 import Foundation
 import UIKit
 
-protocol SchemaCollectionViewDelegate {
+protocol SchemaCollectionViewProtocol {
     func configureCell(cell: ImageCollectionViewCell, for indexPath: IndexPath)
     
     func didSelectCell(at indexPath: IndexPath)
 }
+
+
