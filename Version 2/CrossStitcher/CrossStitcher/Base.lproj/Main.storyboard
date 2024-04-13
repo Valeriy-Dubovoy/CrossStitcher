@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--List-->
+        <!--Projects-->
         <scene sceneID="8DH-M6-jw3">
             <objects>
-                <tableViewController id="Fcx-cN-bOh" customClass="StitchListTableViewController" customModule="CrossStitcher" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Projects" id="Fcx-cN-bOh" customClass="StitchListTableViewController" customModule="CrossStitcher" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="A6u-ed-3zg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,16 +46,16 @@
                             <outlet property="delegate" destination="Fcx-cN-bOh" id="3wH-g0-Hpo"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="List" id="8Ay-GJ-Sd8">
+                    <navigationItem key="navigationItem" title="Projects" id="8Ay-GJ-Sd8">
                         <rightBarButtonItems>
+                            <barButtonItem systemItem="bookmarks" id="35m-Hv-oew">
+                                <connections>
+                                    <segue destination="5oR-0H-Gnb" kind="show" identifier="showHelp" destinationCreationSelector="showHelpSegue:" id="5Hf-pS-gvM"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="add" id="TMu-8w-jlE">
                                 <connections>
                                     <segue destination="agH-hz-d8F" kind="presentation" identifier="addStitch" id="fZl-zl-d9D"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" id="I08-ve-pYO">
-                                <connections>
-                                    <action selector="testColorPickerAction:" destination="Fcx-cN-bOh" id="esU-bg-mei"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -292,15 +292,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vt4-65-hnq">
-                                                    <rect key="frame" x="20" y="11" width="323.5" height="278"/>
+                                                    <rect key="frame" x="20" y="20" width="311.5" height="260"/>
                                                     <accessibility key="accessibilityConfiguration" hint="Choose schema image"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Vt4-65-hnq" firstAttribute="top" secondItem="DdO-05-8Ey" secondAttribute="topMargin" id="KcP-FB-8k9"/>
-                                                <constraint firstItem="Vt4-65-hnq" firstAttribute="leading" secondItem="DdO-05-8Ey" secondAttribute="leadingMargin" id="acx-cM-8aM"/>
-                                                <constraint firstItem="Vt4-65-hnq" firstAttribute="bottom" secondItem="DdO-05-8Ey" secondAttribute="bottomMargin" id="cv5-3X-elE"/>
-                                                <constraint firstItem="Vt4-65-hnq" firstAttribute="trailing" secondItem="DdO-05-8Ey" secondAttribute="trailingMargin" id="t70-Vk-w9H"/>
+                                                <constraint firstItem="Vt4-65-hnq" firstAttribute="leading" secondItem="DdO-05-8Ey" secondAttribute="leading" constant="20" symbolic="YES" id="JL9-Nt-w4S"/>
+                                                <constraint firstAttribute="bottom" secondItem="Vt4-65-hnq" secondAttribute="bottom" constant="20" symbolic="YES" id="i58-0u-WcE"/>
+                                                <constraint firstItem="Vt4-65-hnq" firstAttribute="top" secondItem="DdO-05-8Ey" secondAttribute="top" constant="20" symbolic="YES" id="vQe-UI-MhI"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vt4-65-hnq" secondAttribute="trailing" constant="20" symbolic="YES" id="xW7-zt-K47"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -384,7 +384,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uSf-7A-mJh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3108.6956521739135" y="750"/>
+            <point key="canvasLocation" x="4018.8405797101454" y="750"/>
         </scene>
         <!--Main-->
         <scene sceneID="ZI0-X6-yDF">
@@ -421,6 +421,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wKG-Yn-Xy0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2364" y="92"/>
+        </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="MC9-l0-DLY">
+            <objects>
+                <hostingController id="5oR-0H-Gnb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="mrw-pF-Egm"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EQT-Ag-4Nn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="813" y="1004"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

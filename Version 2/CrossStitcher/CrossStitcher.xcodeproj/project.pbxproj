@@ -20,6 +20,8 @@
 		682950212B6FB72600517484 /* SchemaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682950202B6FB72600517484 /* SchemaPresenter.swift */; };
 		682950242B71040300517484 /* ViewsAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682950232B71040300517484 /* ViewsAssembler.swift */; };
 		682950262B7107A800517484 /* StitchListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682950252B7107A800517484 /* StitchListPresenter.swift */; };
+		689CFADE2BC2A20B00F51402 /* String+html ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689CFADD2BC2A20B00F51402 /* String+html ext.swift */; };
+		689CFAE22BC2B7B300F51402 /* HelpScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689CFAE12BC2B7B300F51402 /* HelpScreenView.swift */; };
 		68A289E42963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A289E32963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift */; };
 		68A289E62963CB800006D484 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A289E52963CB800006D484 /* UIColor+Ext.swift */; };
 		68C723BE29095D20004838F3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C723BD29095D20004838F3 /* Constants.swift */; };
@@ -55,6 +57,8 @@
 		682950202B6FB72600517484 /* SchemaPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaPresenter.swift; sourceTree = "<group>"; };
 		682950232B71040300517484 /* ViewsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsAssembler.swift; sourceTree = "<group>"; };
 		682950252B7107A800517484 /* StitchListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StitchListPresenter.swift; sourceTree = "<group>"; };
+		689CFADD2BC2A20B00F51402 /* String+html ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+html ext.swift"; sourceTree = "<group>"; };
+		689CFAE12BC2B7B300F51402 /* HelpScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScreenView.swift; sourceTree = "<group>"; };
 		68A289E32963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaCollectionViewDelegateProtocol.swift; sourceTree = "<group>"; };
 		68A289E52963CB800006D484 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		68A42B262BC0FA1E004CB18E /* CrossStitcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrossStitcher.entitlements; sourceTree = "<group>"; };
@@ -105,13 +109,14 @@
 		681CB1D62908EA22009CA0CB /* CrossStitcher */ = {
 			isa = PBXGroup;
 			children = (
+				681CB1D72908EA22009CA0CB /* AppDelegate.swift */,
+				681CB1D92908EA22009CA0CB /* SceneDelegate.swift */,
 				68A42B262BC0FA1E004CB18E /* CrossStitcher.entitlements */,
 				68C723C7290C01DA004838F3 /* SchemaUsing */,
 				68C723BA29095412004838F3 /* Model */,
 				681CB1F1290916CF009CA0CB /* List */,
-				681CB1D72908EA22009CA0CB /* AppDelegate.swift */,
-				681CB1D92908EA22009CA0CB /* SceneDelegate.swift */,
 				68C723C4290BC6A0004838F3 /* CoreDataSupport */,
+				68A42B292BC29CE7004CB18E /* HelpScreen */,
 				68C723C1290BC358004838F3 /* Universal */,
 				682950232B71040300517484 /* ViewsAssembler.swift */,
 				68DACE4F2B8B55D000BB2AC2 /* ColorPicker */,
@@ -142,6 +147,14 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		68A42B292BC29CE7004CB18E /* HelpScreen */ = {
+			isa = PBXGroup;
+			children = (
+				689CFAE12BC2B7B300F51402 /* HelpScreenView.swift */,
+			);
+			path = HelpScreen;
+			sourceTree = "<group>";
+		};
 		68C723BA29095412004838F3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +170,7 @@
 				681CB1F42909185E009CA0CB /* FetchedResultsTableViewController.swift */,
 				68C723C2290BC384004838F3 /* UniversalMethods.swift */,
 				68A289E52963CB800006D484 /* UIColor+Ext.swift */,
+				689CFADD2BC2A20B00F51402 /* String+html ext.swift */,
 			);
 			path = Universal;
 			sourceTree = "<group>";
@@ -289,6 +303,7 @@
 				68DACE562B8B649D00BB2AC2 /* ColorPickerPresenter.swift in Sources */,
 				68DACE592B9309F300BB2AC2 /* ColorChooserViewController.swift in Sources */,
 				68C723CD290C02BF004838F3 /* SchemaViewController.swift in Sources */,
+				689CFADE2BC2A20B00F51402 /* String+html ext.swift in Sources */,
 				6829501F2B6FAF6500517484 /* StitchProtocols.swift in Sources */,
 				681CB1E22908EA23009CA0CB /* CrossStitcher.xcdatamodeld in Sources */,
 				68A289E42963C5600006D484 /* SchemaCollectionViewDelegateProtocol.swift in Sources */,
@@ -300,6 +315,7 @@
 				68A289E62963CB800006D484 /* UIColor+Ext.swift in Sources */,
 				68C723BE29095D20004838F3 /* Constants.swift in Sources */,
 				68C723C3290BC384004838F3 /* UniversalMethods.swift in Sources */,
+				689CFAE22BC2B7B300F51402 /* HelpScreenView.swift in Sources */,
 				682950242B71040300517484 /* ViewsAssembler.swift in Sources */,
 				68DACE5F2B935CEF00BB2AC2 /* ColorChooserTableViewCell.swift in Sources */,
 				682950262B7107A800517484 /* StitchListPresenter.swift in Sources */,

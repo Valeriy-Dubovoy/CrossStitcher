@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import SwiftUI
 
 class StitchListTableViewController: FetchedResultsTableViewController {
     
@@ -72,6 +73,14 @@ class StitchListTableViewController: FetchedResultsTableViewController {
         return true
     }
     
+    @IBSegueAction func showHelpSegue(_ coder: NSCoder) -> UIViewController? {
+        let helpScreen = HelpScreenView()
+        let hc = UIHostingController(coder: coder, rootView: helpScreen)
+        
+        //hc?.sizingOptions = .preferredContentSize
+        return hc
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -102,18 +111,14 @@ class StitchListTableViewController: FetchedResultsTableViewController {
                     vc.presenter = presenter
                 }
             }
+                
+        case "showHelp":
+                //let vc = segue.destination as? UIHostingController
+                break
 
         default:
             break
         }
     }
 
-
-    @IBAction func testColorPickerAction(_ sender: Any) {
-        let view = ViewsAssembler.createColorPickerView(color: UIColor.green, alfa: 0.5, sampleImage: UIImage(named: "free-icon-embroidery-7076323") )
-            {color,alfa in
-                print("Choosen color \(color) with opacity \(alfa)")
-            }
-        self.navigationController?.pushViewController(view, animated: true)
-    }
 }
