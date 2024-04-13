@@ -10,12 +10,14 @@ import UIKit
 
 protocol SchemaViewControllerProtocol: AnyObject {
     var presenter: SchemaViewControllerPresenterProtocol! {get set}
+    
+    func updateUndoButtonStatus()
 }
 
 protocol SchemaViewControllerPresenterProtocol: AnyObject, StitchProtocol {
     //var stitchItem: StitchProtocol {get set}
     var currentTool: Tools {get set}
-    
+    var history: History {get}
     
     init(view: SchemaViewControllerProtocol, dbStitch: DBStitch?)
     
@@ -26,6 +28,7 @@ protocol SchemaViewControllerPresenterProtocol: AnyObject, StitchProtocol {
     func getColorFor(markerType: MarkerTypes?) -> UIColor?
     func getAlfaFor(markerType: MarkerTypes?) -> CGFloat
     func replaceMarker1ToMarker2() -> [Int]
+    func undoAction() -> [Int]
 }
 
 class StitchPresenter : SchemaViewControllerPresenterProtocol {
@@ -145,20 +148,26 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
     }
     
    func getCellDescriptionFor( cellCoord: CellCoordinate )  -> StitchItemDescriptionProtocol {
-        let image = getPartOfImage(row: cellCoord.row, column: cellCoord.column )
-        let index = getIndex(of: cellCoord)
-        let dmMarkerItem = markers[index]
-        let marker = MarkerTypes(rawValue: dmMarkerItem?.marker ?? 0 )
-        let color = getColorFor(markerType: marker)
-        let alfa = getAlfaFor(markerType: marker)
-        
-        let cellDescription = CellDescription(row: Int16(cellCoord.row),
+       let image = getPartOfImage(row: cellCoord.row, column: cellCoord.column )
+       let index = cellCoord.indexOfCell
+       let dmMarkerItem = markers[index]
+       let marker = MarkerTypes(rawValue: dmMarkerItem?.marker ?? 0 )
+       let color = getColorFor(markerType: marker)
+       let alfa = getAlfaFor(markerType: marker)
+       
+       let cellDescription = CellDescription(row: Int16(cellCoord.row),
                                              column: Int16(cellCoord.column),
                                              image: image,
                                              marker: marker,
                                              markerColor:  color,
                                              markerAlfa: alfa)
-        return cellDescription
+       return cellDescription
+    }
+    
+    func getCellDescriptionFor( index: Int )  -> StitchItemDescriptionProtocol {
+        let cellCoord = CellCoordinate(index: index)
+        
+        return getCellDescriptionFor(cellCoord: cellCoord)
     }
     
     func setCurrentTool( newToolNumber: Int16 ) {
@@ -166,8 +175,6 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
     }
     
     func tapOnCellAt( cellCoord: CellCoordinate ) -> StitchItemDescriptionProtocol {
-//        let index = getIndex(of: indexPath)
-//        let marker = markers[index]
 
         let cellDescription = getCellDescriptionFor(cellCoord: cellCoord)
         
@@ -193,18 +200,39 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
                 removeMarkerFor(index: cellDescription.index())
         }
         return cellDescription
-   }
+    }
     
     private func removeMarkerFor( index: Int ) {
+        removeMarkerFor(index: index, withoutHistory: false)
+    }
+    
+    private func removeMarkerFor( index: Int, withoutHistory: Bool ) {
         guard let dbMarkerItem = markers[index] else {return}
-        
+
+        if !withoutHistory {
+            let historyStep = HistoryItem(id: index, oldTool: dbMarkerItem.marker, newTool: nil)
+            history.addStep(action: historyStep)
+            view?.updateUndoButtonStatus()
+        }
+
         AppDelegate.viewContext.delete( dbMarkerItem )
         markers.removeValue(forKey: index)
+        
     }
     
     private func setMarker(markerValue: Int16, forCell cell: StitchItemDescriptionProtocol) {
+        setMarker(markerValue: markerValue, forCell: cell, withoutHistory: false)
+    }
+    
+    private func setMarker(markerValue: Int16, forCell cell: StitchItemDescriptionProtocol, withoutHistory: Bool) {
         let indexOfMarker = cell.index()
         
+        if !withoutHistory {
+            let historyStep = HistoryItem(id: indexOfMarker, oldTool: cell.marker?.rawValue, newTool: markerValue)
+            history.addStep(action: historyStep)
+            view?.updateUndoButtonStatus()
+        }
+
         if let dbMarkedItem = markers[ indexOfMarker ] {
             dbMarkedItem.marker = markerValue
         } else {
@@ -226,14 +254,48 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
             item.value.marker == Tools.marker1.rawValue
         }
         
+        var historySteps = [HistoryItem]()
+        
         for item in marker1Items {
             cellsForUpdate.append(item.key)
             item.value.marker   = Tools.marker2.rawValue
+            
+            historySteps.append( HistoryItem(id: item.key, oldTool: Tools.marker1.rawValue, newTool: Tools.marker2.rawValue))
         }
+        
+        history.steps.append(historySteps)
+        view?.updateUndoButtonStatus()
         
         return cellsForUpdate
     }
     
+    
+    // MARK: History
+    var history = History()
+    // mae undo, return cells for update
+    func undoAction() -> [Int] {
+        var cellsForUpdate = [Int]()
+        
+        guard let stepActions = history.steps.last else {return cellsForUpdate}
+        
+        //let stepActions = history.steps.last
+        for action in stepActions {
+            cellsForUpdate.append(action.id)
+            
+            if action.oldTool == nil {
+                removeMarkerFor(index: action.id, withoutHistory: true)
+            } else {
+                setMarker(markerValue: action.oldTool!, forCell: getCellDescriptionFor(index: action.id), withoutHistory: true)
+            }
+            
+        }
+        
+        // remove step
+        history.steps.removeLast()
+        view?.updateUndoButtonStatus()
+        
+        return cellsForUpdate
+    }
     
     // MARK: private methods
     // row and column 0 based
@@ -250,10 +312,6 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
         return nil
     }
     
-    private func getIndex(of cellCoord: CellCoordinate) -> Int {
-        return Constants.indexOf(row: cellCoord.row, column: cellCoord.column)
-    }
-
 }
 
 
@@ -277,4 +335,21 @@ struct CellDescription: StitchItemDescriptionProtocol {
 struct CellCoordinate {
     let row: Int
     let column: Int
+    
+    init( index: Int) {
+        let cellCoord = Constants.cellCoordinatesFrom(index: index)
+        self.row = cellCoord.row
+        self.column = cellCoord.column
+    }
+    
+    init( row: Int, column: Int) {
+        self.row = row
+        self.column = column
+    }
+    
+    var indexOfCell: Int {
+        return Constants.indexOf(row: row, column: column)
+    }
 }
+
+

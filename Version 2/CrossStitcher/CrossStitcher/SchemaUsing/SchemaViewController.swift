@@ -123,6 +123,9 @@ class SchemaViewController: UIViewController {
     @IBOutlet weak var marker1Button: UIBarButtonItem!
     @IBOutlet weak var marker2Button: UIBarButtonItem!
     @IBOutlet weak var eraseButton: UIBarButtonItem!
+
+    @IBOutlet weak var undoButton: UIBarButtonItem!
+    
     
     func makeMarker1AsMarker2(_ sender: UIBarButtonItem) {
         let changedIndexes = presenter.replaceMarker1ToMarker2()
@@ -139,6 +142,16 @@ class SchemaViewController: UIViewController {
         markerNumber = Int16(sender.tag)
     }
     
+    @IBAction func undoButtonAction(_ sender: UIBarButtonItem) {
+        let changedIndexes = presenter.undoAction()
+        var paths = [IndexPath]()
+        for cellIndex in changedIndexes {
+            
+            paths.append( getIndexPathFor(cellCoordinate: Constants.cellCoordinatesFrom(index: cellIndex)))
+        }
+
+        self.schemaViaCollectionView?.updateCells(cells: paths)
+   }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,6 +176,8 @@ class SchemaViewController: UIViewController {
             schemaViaCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             schemaViaCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             schemaViaCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)])
+        
+        updateUndoButtonStatus()
     }
     
     weak var schemaViaCollectionView: ImageViewAsCollectionView?
@@ -225,4 +240,8 @@ extension SchemaViewController: SchemaCollectionViewProtocol {
 
 extension SchemaViewController: SchemaViewControllerProtocol {
     
+    func updateUndoButtonStatus() {
+        undoButton.isEnabled = presenter.history.available
+    }
+
 }

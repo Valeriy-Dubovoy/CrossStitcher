@@ -130,6 +130,12 @@ class StitchEditorTableViewController: UITableViewController, SchemaViewControll
     
     // MARK: Picking up an Image
     private var imageViewWaitingImage: UIImageView?
+    
+    // MARK: SchemaViewControllerProtocol
+    func updateUndoButtonStatus() {
+        // nothing to do
+    }
+
 }
 
 // MARK: Picking up an Image
