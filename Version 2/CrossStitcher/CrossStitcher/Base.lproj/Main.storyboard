@@ -351,12 +351,28 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="1fR-Nh-xZN">
+                        <centerItemGroups>
+                            <barButtonItemGroup customizationDisposition="fixed" id="OYr-Ob-2xt">
+                                <barButtonItems>
+                                    <barButtonItem title="Change the first marker's color" image="pencil.tip.crop.circle.badge.plus" catalog="system" id="JrO-LA-yid">
+                                        <connections>
+                                            <action selector="marker1ColorChange:" destination="Lie-KO-poV" id="TYK-LX-oXY"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Change the second marker's color" image="pencil.tip.crop.circle.badge.minus" catalog="system" id="I5Q-wg-vjC">
+                                        <connections>
+                                            <action selector="marker2ColorChange:" destination="Lie-KO-poV" id="cV4-tq-Frn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Mark by 2nd Cells marked by 1st " id="zev-8h-vvR">
+                                        <connections>
+                                            <action selector="makeMarker1AsMarker2:" destination="Lie-KO-poV" id="drf-4A-bMP"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </barButtonItems>
+                            </barButtonItemGroup>
+                        </centerItemGroups>
                         <rightBarButtonItems>
-                            <barButtonItem title="DropMenu" image="slider.vertical.3" catalog="system" id="zII-Vx-95S">
-                                <connections>
-                                    <action selector="dropMenuAction:" destination="Lie-KO-poV" id="psd-Oy-AUk"/>
-                                </connections>
-                            </barButtonItem>
                             <barButtonItem tag="3" title="Item" image="clear" catalog="system" id="WfZ-jh-LtH">
                                 <connections>
                                     <action selector="markerChoose:" destination="Lie-KO-poV" id="6Cb-3B-6iI"/>
@@ -447,7 +463,8 @@
         <image name="clear" catalog="system" width="128" height="114"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="highlighter" catalog="system" width="128" height="120"/>
-        <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
+        <image name="pencil.tip.crop.circle.badge.minus" catalog="system" width="128" height="114"/>
+        <image name="pencil.tip.crop.circle.badge.plus" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -126,8 +126,57 @@ class SchemaViewController: UIViewController {
 
     @IBOutlet weak var undoButton: UIBarButtonItem!
     
+    @IBAction func marker1ColorChange(_ sender: UIBarButtonItem) {
+        let colorPickerView = ViewsAssembler.createColorPickerView(color: self.presenter.markerColor1,
+                                                                   alfa: self.presenter.alfaMarker1,
+                                                                   sampleImage: self.presenter.schemaImage)
+            {color,alfa in
+                self.presenter.markerColor1 = color
+                self.presenter.alfaMarker1 = alfa
+                self.presenter.saveProperties()
+                
+                self.marker1Button.tintColor = color
+                
+                // make redraw cells with marker 1
+                var paths = [IndexPath]()
+                let markedElements = self.presenter.markers.filter { element in
+                    element.value.marker == Tools.marker1.rawValue
+                }
+                for markerDescription in markedElements {
+                    paths.append( IndexPath(row: Int(markerDescription.value.row * self.presenter.columns + markerDescription.value.column), section: 0))
+                }
+        
+                self.schemaViaCollectionView?.updateCells(cells: paths)
+            }
+        self.present(colorPickerView, animated: true)
+    }
     
-    func makeMarker1AsMarker2(_ sender: UIBarButtonItem) {
+    @IBAction func marker2ColorChange(_ sender: UIBarButtonItem) {
+        let colorPickerView = ViewsAssembler.createColorPickerView(color: self.presenter.markerColor1,
+                                                                   alfa: self.presenter.alfaMarker1,
+                                                                   sampleImage: self.presenter.schemaImage)
+            {color,alfa in
+                self.presenter.markerColor1 = color
+                self.presenter.alfaMarker1 = alfa
+                self.presenter.saveProperties()
+                
+                self.marker1Button.tintColor = color
+                
+                // make redraw cells with marker 1
+                var paths = [IndexPath]()
+                let markedElements = self.presenter.markers.filter { element in
+                    element.value.marker == Tools.marker1.rawValue
+                }
+                for markerDescription in markedElements {
+                    paths.append( IndexPath(row: Int(markerDescription.value.row * self.presenter.columns + markerDescription.value.column), section: 0))
+                }
+        
+                self.schemaViaCollectionView?.updateCells(cells: paths)
+            }
+        self.present(colorPickerView, animated: true)
+    }
+    
+    @IBAction func makeMarker1AsMarker2(_ sender: UIBarButtonItem) {
         let changedIndexes = presenter.replaceMarker1ToMarker2()
         var paths = [IndexPath]()
         for cellIndex in changedIndexes {
