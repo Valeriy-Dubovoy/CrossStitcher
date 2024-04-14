@@ -32,6 +32,132 @@ class SchemaViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var marker1Button: UIBarButtonItem!
+    @IBOutlet weak var marker2Button: UIBarButtonItem!
+    @IBOutlet weak var eraseButton: UIBarButtonItem!
+
+    @IBOutlet weak var undoButton: UIBarButtonItem!
+    
+    @IBAction func marker1ColorChange(_ sender: UIBarButtonItem) {
+        let colorPickerView = ViewsAssembler.createColorPickerView(color: self.presenter.markerColor1,
+                                                                   alfa: self.presenter.alfaMarker1,
+                                                                   sampleImage: self.presenter.schemaImage)
+            {color,alfa in
+                self.presenter.markerColor1 = color
+                self.presenter.alfaMarker1 = alfa
+                self.presenter.saveProperties()
+                
+                self.marker1Button.tintColor = color
+                
+                // make redraw cells with marker 1
+                var paths = [IndexPath]()
+                let markedElements = self.presenter.markers.filter { element in
+                    element.value.marker == Tools.marker1.rawValue
+                }
+                for markerDescription in markedElements {
+                    paths.append( IndexPath(row: Int(markerDescription.value.row * self.presenter.columns + markerDescription.value.column), section: 0))
+                }
+        
+                self.schemaViaCollectionView?.updateCells(cells: paths)
+            }
+        self.present(colorPickerView, animated: true)
+    }
+    
+    @IBAction func marker2ColorChange(_ sender: UIBarButtonItem) {
+        let colorPickerView = ViewsAssembler.createColorPickerView(color: self.presenter.markerColor1,
+                                                                   alfa: self.presenter.alfaMarker1,
+                                                                   sampleImage: self.presenter.schemaImage)
+            {color,alfa in
+                self.presenter.markerColor1 = color
+                self.presenter.alfaMarker1 = alfa
+                self.presenter.saveProperties()
+                
+                self.marker1Button.tintColor = color
+                
+                // make redraw cells with marker 1
+                var paths = [IndexPath]()
+                let markedElements = self.presenter.markers.filter { element in
+                    element.value.marker == Tools.marker1.rawValue
+                }
+                for markerDescription in markedElements {
+                    paths.append( IndexPath(row: Int(markerDescription.value.row * self.presenter.columns + markerDescription.value.column), section: 0))
+                }
+        
+                self.schemaViaCollectionView?.updateCells(cells: paths)
+            }
+        self.present(colorPickerView, animated: true)
+    }
+    
+    @IBAction func makeMarker1AsMarker2(_ sender: UIBarButtonItem) {
+        let changedIndexes = presenter.replaceMarker1ToMarker2()
+        var paths = [IndexPath]()
+        for cellIndex in changedIndexes {
+            
+            paths.append( getIndexPathFor(cellCoordinate: CellCoordinate(index: cellIndex) ) )
+        }
+
+        self.schemaViaCollectionView?.updateCells(cells: paths)
+    }
+    
+    @IBAction func markerChoose(_ sender: UIBarButtonItem) {
+        markerNumber = Int16(sender.tag)
+    }
+    
+    @IBAction func undoButtonAction(_ sender: UIBarButtonItem) {
+        let changedIndexes = presenter.undoAction()
+        var paths = [IndexPath]()
+        for cellIndex in changedIndexes {
+            
+            paths.append( getIndexPathFor(cellCoordinate: CellCoordinate(index: cellIndex) ) )
+        }
+
+        self.schemaViaCollectionView?.updateCells(cells: paths)
+   }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        markerNumber = presenter.currentTool.rawValue
+        
+        //set colors of marker buttons like marker color
+        marker1Button.tintColor = presenter.markerColor1
+        marker2Button.tintColor = presenter.markerColor2
+        
+        let schemaViaCollectionView = ImageViewAsCollectionView.init(frame: CGRect(x: 0, y: schemaViewOffset, width: view.frame.width, height: view.frame.height - schemaViewOffset))
+        schemaViaCollectionView.delegete = self
+        // set properties: image, rows, columns
+        schemaViaCollectionView.startWith(presenter: self.presenter)
+        schemaViaCollectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview( schemaViaCollectionView )
+        self.schemaViaCollectionView = schemaViaCollectionView
+
+        NSLayoutConstraint.activate([
+            schemaViaCollectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: schemaViewOffset),
+            schemaViaCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            schemaViaCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            schemaViaCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)])
+        
+        updateUndoButtonStatus()
+    }
+    
+    weak var schemaViaCollectionView: ImageViewAsCollectionView?
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        //schemaViaCollectionView.didChangeLayout()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        presenter.saveProperties()
+        
+        // to avoid co-references. For example ImageViewAsCollectionView has got delegate reference to it view, but overwise it is in stack of subviews
+        for subview in view.subviews {
+            subview.removeFromSuperview()
+        }
+    }
+    /*
     @IBAction func dropMenuAction(_ sender: UIBarButtonItem) {
         let alertTitle = NSLocalizedString("Futures", comment: "")
         let alertMessage = NSLocalizedString("", comment: "")
@@ -118,133 +244,8 @@ class SchemaViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
 
-}
+}*/
     
-    @IBOutlet weak var marker1Button: UIBarButtonItem!
-    @IBOutlet weak var marker2Button: UIBarButtonItem!
-    @IBOutlet weak var eraseButton: UIBarButtonItem!
-
-    @IBOutlet weak var undoButton: UIBarButtonItem!
-    
-    @IBAction func marker1ColorChange(_ sender: UIBarButtonItem) {
-        let colorPickerView = ViewsAssembler.createColorPickerView(color: self.presenter.markerColor1,
-                                                                   alfa: self.presenter.alfaMarker1,
-                                                                   sampleImage: self.presenter.schemaImage)
-            {color,alfa in
-                self.presenter.markerColor1 = color
-                self.presenter.alfaMarker1 = alfa
-                self.presenter.saveProperties()
-                
-                self.marker1Button.tintColor = color
-                
-                // make redraw cells with marker 1
-                var paths = [IndexPath]()
-                let markedElements = self.presenter.markers.filter { element in
-                    element.value.marker == Tools.marker1.rawValue
-                }
-                for markerDescription in markedElements {
-                    paths.append( IndexPath(row: Int(markerDescription.value.row * self.presenter.columns + markerDescription.value.column), section: 0))
-                }
-        
-                self.schemaViaCollectionView?.updateCells(cells: paths)
-            }
-        self.present(colorPickerView, animated: true)
-    }
-    
-    @IBAction func marker2ColorChange(_ sender: UIBarButtonItem) {
-        let colorPickerView = ViewsAssembler.createColorPickerView(color: self.presenter.markerColor1,
-                                                                   alfa: self.presenter.alfaMarker1,
-                                                                   sampleImage: self.presenter.schemaImage)
-            {color,alfa in
-                self.presenter.markerColor1 = color
-                self.presenter.alfaMarker1 = alfa
-                self.presenter.saveProperties()
-                
-                self.marker1Button.tintColor = color
-                
-                // make redraw cells with marker 1
-                var paths = [IndexPath]()
-                let markedElements = self.presenter.markers.filter { element in
-                    element.value.marker == Tools.marker1.rawValue
-                }
-                for markerDescription in markedElements {
-                    paths.append( IndexPath(row: Int(markerDescription.value.row * self.presenter.columns + markerDescription.value.column), section: 0))
-                }
-        
-                self.schemaViaCollectionView?.updateCells(cells: paths)
-            }
-        self.present(colorPickerView, animated: true)
-    }
-    
-    @IBAction func makeMarker1AsMarker2(_ sender: UIBarButtonItem) {
-        let changedIndexes = presenter.replaceMarker1ToMarker2()
-        var paths = [IndexPath]()
-        for cellIndex in changedIndexes {
-            
-            paths.append( getIndexPathFor(cellCoordinate: Constants.cellCoordinatesFrom(index: cellIndex)))
-        }
-
-        self.schemaViaCollectionView?.updateCells(cells: paths)
-    }
-    
-    @IBAction func markerChoose(_ sender: UIBarButtonItem) {
-        markerNumber = Int16(sender.tag)
-    }
-    
-    @IBAction func undoButtonAction(_ sender: UIBarButtonItem) {
-        let changedIndexes = presenter.undoAction()
-        var paths = [IndexPath]()
-        for cellIndex in changedIndexes {
-            
-            paths.append( getIndexPathFor(cellCoordinate: Constants.cellCoordinatesFrom(index: cellIndex)))
-        }
-
-        self.schemaViaCollectionView?.updateCells(cells: paths)
-   }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        markerNumber = presenter.currentTool.rawValue
-        
-        //set colors of marker buttons like marker color
-        marker1Button.tintColor = presenter.markerColor1
-        marker2Button.tintColor = presenter.markerColor2
-        
-        let schemaViaCollectionView = ImageViewAsCollectionView.init(frame: CGRect(x: 0, y: schemaViewOffset, width: view.frame.width, height: view.frame.height - schemaViewOffset))
-        schemaViaCollectionView.delegete = self
-        // set properties: image, rows, columns
-        schemaViaCollectionView.startWith(presenter: self.presenter)
-        schemaViaCollectionView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview( schemaViaCollectionView )
-        self.schemaViaCollectionView = schemaViaCollectionView
-
-        NSLayoutConstraint.activate([
-            schemaViaCollectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: schemaViewOffset),
-            schemaViaCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            schemaViaCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            schemaViaCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)])
-        
-        updateUndoButtonStatus()
-    }
-    
-    weak var schemaViaCollectionView: ImageViewAsCollectionView?
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        //schemaViaCollectionView.didChangeLayout()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        presenter.saveProperties()
-        
-        // to avoid co-references. For example ImageViewAsCollectionView has got delegate reference to it view, but overwise it is in stack of subviews
-        for subview in view.subviews {
-            subview.removeFromSuperview()
-        }
-    }
 }
 
 // MARK: - Collection view Delegate

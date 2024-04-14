@@ -350,6 +350,7 @@ struct CellCoordinate {
     var indexOfCell: Int {
         return Constants.indexOf(row: row, column: column)
     }
+    
 }
 
 
