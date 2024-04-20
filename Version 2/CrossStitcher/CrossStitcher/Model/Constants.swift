@@ -18,6 +18,7 @@ struct Constants {
         return row << 16 + column
     }
     
+    // TODO: remove
     static func cellCoordinatesFrom(index: Int) -> CellCoordinate {
         return CellCoordinate(row: (index & 0xffff0000)>>16, column: index & 0xffff)
     }
@@ -48,34 +49,12 @@ struct Constants {
     static func helpText( lang: String? ) -> String {
         if lang == "ru" {
             return """
-<h2>Welcome To The Best Online HTML Web Editor!</h2>
-<p style="font-size: 1.5em;">You can <strong style="background-color: #317399; padding: 0 5px; color: #fff;">type your text</strong> directly in the editor or paste it from a Word Doc, PDF, Excel etc.</p>
-<p style="font-size: 1.5em;">The <strong>visual editor</strong> on the right and the <strong>source editor</strong> on the left are linked together and the changes are reflected in the other one as you type! <img="free-icon-embroidery-7076323"></p>
-<table class="editorDemoTable">
-<tbody>
-<tr>
-<td><strong>Name</strong></td>
-<td><strong>City</strong></td>
-<td><strong>Age</strong></td>
-</tr>
-<tr>
-<td>John</td>
-<td>Chicago</td>
-<td>23</td>
-</tr>
-<tr>
-<td>Lucy</td>
-<td>Wisconsin</td>
-<td>19</td>
-</tr>
-<tr>
-<td>Amanda</td>
-<td>Madison</td>
-<td>22</td>
-</tr>
-</tbody>
-</table>
-<p>This is a table you can experiment with.</p>
+<h1>Заголовок стиля 1</h1>
+<p style="font-size: 1.5em;">Текст 1,5 размера <strong  style="color: #aaafff;">выделение цветом</strong> после выделения</p>
+<p>The <strong>visual editor</strong> on the right and the <strong>source editor</strong> on the left are linked together and the changes are reflected in the other one as you type!</p>
+<p>А дальше картинка</p>
+<img="free-icon-embroidery-7076323">
+
 """
         }
         

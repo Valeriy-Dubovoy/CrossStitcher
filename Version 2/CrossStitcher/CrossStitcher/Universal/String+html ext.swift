@@ -10,7 +10,7 @@ import UIKit
 
 extension String {
     
-    func htmlNSAttributedString(size: CGFloat, color: UIColor?) -> NSAttributedString? {
+    func htmlNSAttributedString(size: CGFloat, color: UIColor?, fontFamily: String = "-apple-system") -> NSAttributedString? {
         let htmlTemplate = """
         <!doctype html>
         <html>
@@ -19,7 +19,7 @@ extension String {
               body {
                 \(color == nil ? "": "color: \(color!.hexString!);")
                 
-                font-family: -apple-system;
+                font-family: \(fontFamily);
                 font-size: \(size)px;
               }
             </style>
@@ -36,7 +36,7 @@ extension String {
 
         guard let attributedString = try? NSAttributedString(
             data: data,
-            options: [.documentType: NSAttributedString.DocumentType.html],
+            options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: NSUTF8StringEncoding],
             documentAttributes: nil
             ) else {
             return nil
@@ -78,7 +78,7 @@ extension String {
 
         guard let attributedString = try? NSAttributedString(
             data: data,
-            options: [.documentType: NSAttributedString.DocumentType.html],
+            options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: NSUTF8StringEncoding],
             documentAttributes: nil
             ) else {
             return nil

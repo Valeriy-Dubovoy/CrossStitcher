@@ -34,7 +34,7 @@ struct HelpScreenView: View {
             .font(.footnote)
             .padding(.bottom)
 
-            Text(NSLocalizedString("Overview", comment: ""))
+            Text(NSLocalizedString("How to use", comment: ""))
                 .font(.title2)
             
            HelpDescriptionView()
@@ -45,7 +45,7 @@ struct HelpScreenView: View {
 
 struct HelpDescriptionView: View {
     var body: some View {
-        let htmlString = Constants.helpText(lang: NSLocalizedString("en", comment: ""))
+        let htmlString = Constants.helpText(lang: NSLocalizedString("ru", comment: ""))
         
         let blocks = divideHTMLtoBlocksWithImages(htmlString: htmlString)
 
@@ -104,32 +104,12 @@ extension Text {
          raw: Bool = false, // set to true if you don't want to embed in the doc skeleton
          size: CGFloat? = nil, // optional document-wide text size
          fontFamily: String = "-apple-system") { // optional document-wide font family
-        let fullHTML: String
+        
         if raw {
-            fullHTML = htmlString
-        } else {
-            var sizeCss = ""
-            if let size = size {
-                sizeCss = "font-size: \(size)px;"
-            }
-            fullHTML = """
-        <!doctype html>
-         <html>
-            <head>
-              <style>
-                body {
-                  font-family: \(fontFamily);
-                  \(sizeCss)
-                }
-              </style>
-            </head>
-            <body>
-              \(htmlString)
-            </body>
-          </html>
-        """
+            self.init(NSAttributedString(string: htmlString))
+            return
         }
-        let attributedString = fullHTML.htmlNSAttributedString(size: size ?? 12, color: nil) ?? NSAttributedString()
+        let attributedString = htmlString.htmlNSAttributedString(size: size ?? 12, color: nil, fontFamily: fontFamily) ?? NSAttributedString()
         
         self.init(attributedString) // uses the NSAttributedString initializer
     }

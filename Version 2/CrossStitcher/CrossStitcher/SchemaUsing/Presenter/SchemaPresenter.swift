@@ -315,42 +315,5 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
 }
 
 
-struct CellDescription: StitchItemDescriptionProtocol {
-    let row: Int16
-    let column: Int16
-    let image: UIImage?
-    let marker: MarkerTypes?
-    
-    func isMarked() -> Bool {
-        return marker != nil
-    }
-    func index() -> Int {
-        return Constants.indexOf(row: row, column: column)
-    }
-    
-    let markerColor: UIColor?
-    let markerAlfa: CGFloat
-}
-
-struct CellCoordinate {
-    let row: Int
-    let column: Int
-    
-    init( index: Int) {
-        let cellCoord = Constants.cellCoordinatesFrom(index: index)
-        self.row = cellCoord.row
-        self.column = cellCoord.column
-    }
-    
-    init( row: Int, column: Int) {
-        self.row = row
-        self.column = column
-    }
-    
-    var indexOfCell: Int {
-        return Constants.indexOf(row: row, column: column)
-    }
-    
-}
 
 
