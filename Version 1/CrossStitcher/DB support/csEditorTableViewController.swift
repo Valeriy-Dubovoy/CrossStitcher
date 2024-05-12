@@ -53,10 +53,10 @@ class csEditorTableViewController: UITableViewController, UIImagePickerControlle
         nameTextField?.text = edittingItem?.name
         rowsTextField?.text = String( edittingItem?.gridRows ?? 0 )
         columnsTextField?.text = String( edittingItem?.gridColumns ?? 0 )
-        if let imageData = edittingItem?.schemaData {
+        if let imageData = edittingItem?.images?.schemaData {
             schemaImageView?.image = UIImage(data: imageData)
         }
-        if let imageData = edittingItem?.imageData {
+        if let imageData = edittingItem?.images?.previewData {
             previewImageView?.image = UIImage(data: imageData)
         }
     }
@@ -67,19 +67,26 @@ class csEditorTableViewController: UITableViewController, UIImagePickerControlle
             return
         }
         var csObject = edittingItem
+        var images: ImageDatas?
         if csObject == nil {
             //insert new object
             csObject = CrossStitch.init(context: AppDelegate.managedObjectContext)
             
         } else {
             // update object
+            images = csObject!.images
         }
+        if images == nil {
+            images = ImageDatas.init(context: AppDelegate.managedObjectContext)
+        }
+
         csObject!.name = nameTextField.text
-        csObject!.gridRows = Int16( rowsTextField.text ?? "0" ) ?? 0
-        csObject!.gridColumns = Int16( columnsTextField.text ?? "0" ) ?? 0
+        csObject!.gridRows = Int16( rowsTextField.text ?? "10" ) ?? 10
+        csObject!.gridColumns = Int16( columnsTextField.text ?? "10" ) ?? 10
         
-        csObject!.schemaData = schemaImageView?.image?.pngData()
-        csObject!.imageData = previewImageView?.image?.pngData()
+        images!.schemaData = schemaImageView?.image?.pngData()
+        images!.previewData = previewImageView?.image?.pngData()
+        csObject!.images = images
         
         // update grid rect to place inside image size
         if let img = schemaImageView?.image {

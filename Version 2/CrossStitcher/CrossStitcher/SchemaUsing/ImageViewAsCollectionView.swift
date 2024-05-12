@@ -60,6 +60,12 @@ class ImageViewAsCollectionView: UIView {
         collectionView.reconfigureItems(at: cells)
     }
     
+    func updateAll() {
+        initRowsLabels()
+        initColumnsLabels()
+        collectionView.reconfigureItems(at: collectionView.indexPathsForVisibleItems)
+    }
+    
     var delegete: SchemaCollectionViewProtocol?
     
     // private

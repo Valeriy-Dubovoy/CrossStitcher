@@ -114,9 +114,33 @@ class SchemaViewController: UIViewController {
         self.schemaViaCollectionView?.updateCells(cells: paths)
    }
     
+    @IBAction func editStitchModel(_ sender: UIBarButtonItem) {
+        // Create a reference to the the appropriate storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        // Instantiate the desired view controller from the storyboard using the view controllers identifier
+        // Cast is as the custom view controller type you created in order to access it's properties and methods
+        let editor = storyboard.instantiateViewController(withIdentifier: "StitchEditorTableViewController") as!StitchEditorTableViewController
+        
+        //let editor = StitchEditorTableViewController()
+        editor.modalPresentationStyle = .fullScreen
+        let editorPresenter = StitchPresenter(view: editor, dbStitch: presenter.dbStitch, doAfterSave: {
+            self.presenter.updateDataFromBase()
+            //self.schemaViaCollectionView?.updateAll()
+        })
+        
+        editor.presenter = editorPresenter
+        //self.present(editor, animated: true)
+        self.navigationController?.pushViewController(editor, animated: true)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         markerNumber = presenter.currentTool.rawValue
         
         //set colors of marker buttons like marker color

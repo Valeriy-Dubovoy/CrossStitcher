@@ -87,7 +87,7 @@ class StitchListTableViewController: FetchedResultsTableViewController {
         case "addStitch":
                 let dest = segue.destination as? UINavigationController
                 if let vc = dest?.viewControllers[0] as? SchemaViewControllerProtocol {
-                    let presenter = StitchPresenter(view: vc, dbStitch: nil)
+                    let presenter = StitchPresenter(view: vc, dbStitch: nil, doAfterSave: nil)
                     vc.presenter = presenter
                 }
         case "editStitch":
@@ -96,7 +96,7 @@ class StitchListTableViewController: FetchedResultsTableViewController {
                 let object = fetchedResultController?.object(at: indexPath) as? DBStitch
                 let dest = segue.destination as? UINavigationController
                 if let vc = dest?.viewControllers[0] as? SchemaViewControllerProtocol {
-                    let presenter = StitchPresenter(view: vc, dbStitch: object)
+                    let presenter = StitchPresenter(view: vc, dbStitch: object, doAfterSave: nil)
                     vc.presenter = presenter
                 }
             }
@@ -107,7 +107,7 @@ class StitchListTableViewController: FetchedResultsTableViewController {
 //                let dest = segue.destination as? UINavigationController
 //                if let vc = dest?.viewControllers[0] as? SchemaViewController {
                 if let vc = segue.destination as? SchemaViewController {
-                    let presenter = StitchPresenter(view: vc, dbStitch: object)
+                    let presenter = StitchPresenter(view: vc, dbStitch: object, doAfterSave: nil)
                     vc.presenter = presenter
                 }
             }

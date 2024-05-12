@@ -18,8 +18,10 @@ protocol SchemaViewControllerPresenterProtocol: AnyObject, StitchProtocol {
     //var stitchItem: StitchProtocol {get set}
     var currentTool: Tools {get set}
     var history: History {get}
+    var doAfterSave: (()->())? {get set}
     
-    init(view: SchemaViewControllerProtocol, dbStitch: DBStitch?)
+    
+    init(view: SchemaViewControllerProtocol?, dbStitch: DBStitch?, doAfterSave: (()->())?)
     
     func saveProperties()
     func getCellDescriptionFor( cellCoord: CellCoordinate ) -> StitchItemDescriptionProtocol
@@ -29,6 +31,7 @@ protocol SchemaViewControllerPresenterProtocol: AnyObject, StitchProtocol {
     func getAlfaFor(markerType: MarkerTypes?) -> CGFloat
     func replaceMarker1ToMarker2() -> [Int]
     func undoAction() -> [Int]
+    func updateDataFromBase()
 }
 
 class StitchPresenter : SchemaViewControllerPresenterProtocol {
@@ -55,13 +58,34 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
     
     // MARK: Presenter
     var currentTool: Tools
+    var doAfterSave: (()->())?
     
-    required init(view: SchemaViewControllerProtocol, dbStitch: DBStitch?) {
+    required init(view: SchemaViewControllerProtocol?, dbStitch: DBStitch?, doAfterSave: (()->())?) {
         self.view   = view
         self.dbStitch = dbStitch
+        self.doAfterSave = doAfterSave
         
         self.currentTool = Tools.marker1
         
+        self.name = NSLocalizedString("New stitch", comment: "")
+        self.schemaImage = nil
+        self.previewImage = nil
+        self.rows = 1
+        self.startRow = 1
+        self.columns = 1
+        self.startColumn = 1
+        self.lastZoom = 1.0
+        self.markerColor1 = Constants.marker1Color()
+        self.markerColor2 = Constants.marker2Color()
+        self.alfaMarker1 = 0.5
+        self.alfaMarker2 = 0.5
+        
+        markers = [Int: DBMarkedItem]()
+
+        self.updateDataFromBase()
+    }
+    
+    func updateDataFromBase() {
         if let dbStitch = dbStitch {
             self.name = dbStitch.name ?? ""
             self.schemaImage = dbStitch.schema == nil ? nil : UIImage(data: dbStitch.schema!)
@@ -101,6 +125,7 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
             
             markers = [Int: DBMarkedItem]()
         }
+
     }
     
     func saveProperties() {
@@ -120,6 +145,10 @@ class StitchPresenter : SchemaViewControllerPresenterProtocol {
         dbStitch?.schema = self.schemaImage?.pngData()
         dbStitch?.preview = self.previewImage?.pngData()
         dbStitch?.lastZoom = Float(self.lastZoom)
+        
+        if let doSomething = self.doAfterSave {
+            doSomething()
+        }
         
     }
     

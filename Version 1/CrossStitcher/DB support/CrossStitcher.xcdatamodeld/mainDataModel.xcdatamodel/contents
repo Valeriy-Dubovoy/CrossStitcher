@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="20D80" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="CrossStitch" representedClassName=".CrossStitch" syncable="YES" codeGenerationType="category">
+    <entity name="CrossStitch" representedClassName=".CrossStitch" syncable="YES">
+        <attribute name="deleteImageData" optional="YES" attributeType="Binary"/>
+        <attribute name="deleteSchemaData" optional="YES" attributeType="Binary"/>
         <attribute name="gridColor" optional="YES" attributeType="String"/>
         <attribute name="gridColumns" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="gridRectHeight" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -8,15 +10,20 @@
         <attribute name="gridRectX" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="gridRectY" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="gridRows" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="imageData" optional="YES" attributeType="Binary"/>
         <attribute name="indexField" optional="YES" attributeType="String"/>
         <attribute name="markedCells" optional="YES" attributeType="String"/>
         <attribute name="marker1Color" optional="YES" attributeType="String"/>
         <attribute name="marker2Color" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String" minValueString="1" defaultValueString="input name"/>
+        <relationship name="images" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ImageDatas" inverseName="stitch" inverseEntity="ImageDatas"/>
+    </entity>
+    <entity name="ImageDatas" representedClassName=".ImageDatas" syncable="YES">
+        <attribute name="previewData" optional="YES" attributeType="Binary"/>
         <attribute name="schemaData" optional="YES" attributeType="Binary"/>
+        <relationship name="stitch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CrossStitch" inverseName="images" inverseEntity="CrossStitch"/>
     </entity>
     <elements>
-        <element name="CrossStitch" positionX="-63" positionY="-18" width="128" height="253"/>
+        <element name="CrossStitch" positionX="-63" positionY="-18" width="128" height="268"/>
+        <element name="ImageDatas" positionX="-54" positionY="99" width="128" height="74"/>
     </elements>
 </model>

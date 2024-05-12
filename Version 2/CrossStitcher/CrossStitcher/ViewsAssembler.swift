@@ -30,7 +30,7 @@ class ViewsAssembler: ViewsAssemblerProtocol {
     
     static func createStitchPropertyEditorViewController(for dbStitchItem: DBStitch?) -> UIViewController {
         let view = StitchEditorTableViewController()
-        let presenter = StitchPresenter(view: view, dbStitch: dbStitchItem)
+        let presenter = StitchPresenter(view: view, dbStitch: dbStitchItem, doAfterSave: nil)
         
         view.presenter = presenter
         return view

@@ -12,7 +12,7 @@ class CrossStitchObject {
     var crossStitchDBObject: CrossStitch? {
         didSet{
             if let crossStitch = crossStitchDBObject {
-                if let dataForImg = crossStitch.schemaData {
+                if let dataForImg = crossStitch.images?.schemaData {
                     schemaImage = UIImage(data: dataForImg )
                 }
                 if let strColor = crossStitch.marker1Color, !strColor.isEmpty {

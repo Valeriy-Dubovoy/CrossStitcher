@@ -1,0 +1,164 @@
+2024-01-17 12:30:13 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x2c2074180; archive(resolved)="<IDEArchive: 0x600008863360>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	Chain (14, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x2c2074180; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionProcessingPipelineContext: 0x2c556d780; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2d18655e0; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2c1a566b0; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2d180f5e0; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2d1836840; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2c56dea70; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2c56de870; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2c1fe2e60; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600007910d00; teamID='3ZE6RDM8AN', teamName='Valery Dubovoy', teamType='Individual', username='valdubov@mail.ru', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x2c1fe47d0; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="(null)">
+	<IDEDistributionContext: 0x2d1a22a90; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="(null)">
+	<IDEDistributionContext: 0x2d1a5db00; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="(null)">
+	<IDEDistributionContext: 0x2c2090e20; archive = "<IDEArchive: 0x600008863360>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600026ebe420>", team="(null)">
+	<IDEDistributionContext: 0x2c56dee60; archive = "<IDEArchive: 0x600008863360>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x2c2074180>
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCreateDestRootStep
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCopyItemStep
+2024-01-17 12:30:13 +0000  Running /usr/bin/ditto '-V' '/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app' '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app'
+2024-01-17 12:30:13 +0000  >>> Copying /Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app 
+2024-01-17 12:30:13 +0000  copying file ./_CodeSignature/CodeResources ... 
+2024-01-17 12:30:13 +0000  5905 bytes for ./_CodeSignature/CodeResources
+2024-01-17 12:30:13 +0000  copying file ./CrossStitcher ... 
+2024-01-17 12:30:13 +0000  226864 bytes for ./CrossStitcher
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/UINavigationController-9NR-me-pi4.nib ... 
+2024-01-17 12:30:13 +0000  2739 bytes for ./Base.lproj/Main.storyboardc/UINavigationController-9NR-me-pi4.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/UINavigationController-agH-hz-d8F.nib ... 
+2024-01-17 12:30:13 +0000  2225 bytes for ./Base.lproj/Main.storyboardc/UINavigationController-agH-hz-d8F.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/Lie-KO-poV-view-uAp-TE-Tv3.nib ... 
+2024-01-17 12:30:13 +0000  1197 bytes for ./Base.lproj/Main.storyboardc/Lie-KO-poV-view-uAp-TE-Tv3.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/UIViewController-Lie-KO-poV.nib ... 
+2024-01-17 12:30:13 +0000  2486 bytes for ./Base.lproj/Main.storyboardc/UIViewController-Lie-KO-poV.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/Fcx-cN-bOh-view-A6u-ed-3zg.nib ... 
+2024-01-17 12:30:13 +0000  5005 bytes for ./Base.lproj/Main.storyboardc/Fcx-cN-bOh-view-A6u-ed-3zg.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/hZF-Z6-C4C-view-PaB-Iz-ge7.nib ... 
+2024-01-17 12:30:13 +0000  9066 bytes for ./Base.lproj/Main.storyboardc/hZF-Z6-C4C-view-PaB-Iz-ge7.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/Main.storyboardc/Info.plist ... 
+2024-01-17 12:30:13 +0000  429 bytes for ./Base.lproj/Main.storyboardc/Info.plist
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2024-01-17 12:30:13 +0000  1197 bytes for ./Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2024-01-17 12:30:13 +0000  896 bytes for ./Base.lproj/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib
+2024-01-17 12:30:13 +0000  copying file ./Base.lproj/LaunchScreen.storyboardc/Info.plist ... 
+2024-01-17 12:30:13 +0000  258 bytes for ./Base.lproj/LaunchScreen.storyboardc/Info.plist
+2024-01-17 12:30:13 +0000  copying file ./embedded.mobileprovision ... 
+2024-01-17 12:30:13 +0000  14246 bytes for ./embedded.mobileprovision
+2024-01-17 12:30:13 +0000  copying file ./CrossStitcher.momd/CrossStitcher.mom ... 
+2024-01-17 12:30:13 +0000  3101 bytes for ./CrossStitcher.momd/CrossStitcher.mom
+2024-01-17 12:30:13 +0000  copying file ./CrossStitcher.momd/VersionInfo.plist ... 
+2024-01-17 12:30:13 +0000  255 bytes for ./CrossStitcher.momd/VersionInfo.plist
+2024-01-17 12:30:13 +0000  copying file ./CrossStitcher.momd/CrossStitcher.omo ... 
+2024-01-17 12:30:13 +0000  5576 bytes for ./CrossStitcher.momd/CrossStitcher.omo
+2024-01-17 12:30:13 +0000  copying file ./Info.plist ... 
+2024-01-17 12:30:13 +0000  1487 bytes for ./Info.plist
+2024-01-17 12:30:13 +0000  copying file ./PkgInfo ... 
+2024-01-17 12:30:13 +0000  8 bytes for ./PkgInfo
+2024-01-17 12:30:13 +0000  /usr/bin/ditto exited with 0
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionEmbedProfileStep
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionInfoPlistStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCompileBitcodeStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCodeSlimmingStep
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCopyBCSymbolMapsStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionSymbolsStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionAppThinningStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionArchThinningStep
+2024-01-17 12:30:13 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app/CrossStitcher' '-verify_arch' 'arm64e'
+2024-01-17 12:30:13 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2024-01-17 12:30:13 +0000  Skipping architecture thinning for item "CrossStitcher" because arch "arm64e" wasn't found
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionODRStep
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionStripXattrsStep
+2024-01-17 12:30:13 +0000  Running /usr/bin/xattr '-crs' '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app'
+2024-01-17 12:30:13 +0000  /usr/bin/xattr exited with 0
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCodesignStep
+2024-01-17 12:30:13 +0000  Entitlements for <IDEDistributionItem: 0x600004897c00; bundleID='ru.isoftdv.CrossStitcher', path='<DVTFilePath:0x60001841df10:'/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600068f71900; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x600009b85130; name='Apple Distribution: Valery Dubovoy (3ZE6RDM8AN)', hash='9BE7992DCBB75A167443DF807F754E8EFD0FA4A7', serialNumber='13F3F1CBB89DFF5D09C274BAF059FD0E', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2023-12-11 10:32:37 +0000''>', entitlements='{
+    "application-identifier" = "3ZE6RDM8AN.ru.isoftdv.CrossStitcher";
+    "com.apple.developer.team-identifier" = 3ZE6RDM8AN;
+    "get-task-allow" = 0;
+}', teamID='3ZE6RDM8AN', identifier='ru.isoftdv.CrossStitcher', executablePath='<DVTFilePath:0x600018416140:'/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app/CrossStitcher'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "3ZE6RDM8AN.ru.isoftdv.CrossStitcher";
+    "com.apple.developer.team-identifier" = 3ZE6RDM8AN;
+    "get-task-allow" = 0;
+}
+2024-01-17 12:30:13 +0000  Entitlements for <IDEDistributionItem: 0x600004897c00; bundleID='ru.isoftdv.CrossStitcher', path='<DVTFilePath:0x60001841df10:'/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600068f71900; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x600009b58370; name='Apple Distribution: Valery Dubovoy (3ZE6RDM8AN)', hash='9BE7992DCBB75A167443DF807F754E8EFD0FA4A7', serialNumber='13F3F1CBB89DFF5D09C274BAF059FD0E', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2023-12-11 10:32:37 +0000''>', entitlements='{
+    "application-identifier" = "3ZE6RDM8AN.ru.isoftdv.CrossStitcher";
+    "com.apple.developer.team-identifier" = 3ZE6RDM8AN;
+    "get-task-allow" = 0;
+}', teamID='3ZE6RDM8AN', identifier='ru.isoftdv.CrossStitcher', executablePath='<DVTFilePath:0x600018416140:'/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app/CrossStitcher'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "3ZE6RDM8AN.ru.isoftdv.CrossStitcher";
+    "com.apple.developer.team-identifier" = 3ZE6RDM8AN;
+    "get-task-allow" = 0;
+}
+2024-01-17 12:30:13 +0000  Writing entitlements for <IDEDistributionItem: 0x600004897c00; bundleID='ru.isoftdv.CrossStitcher', path='<DVTFilePath:0x60001841df10:'/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600068f71900; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x600009b85600; name='Apple Distribution: Valery Dubovoy (3ZE6RDM8AN)', hash='9BE7992DCBB75A167443DF807F754E8EFD0FA4A7', serialNumber='13F3F1CBB89DFF5D09C274BAF059FD0E', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2023-12-11 10:32:37 +0000''>', entitlements='{
+    "application-identifier" = "3ZE6RDM8AN.ru.isoftdv.CrossStitcher";
+    "com.apple.developer.team-identifier" = 3ZE6RDM8AN;
+    "get-task-allow" = 0;
+}', teamID='3ZE6RDM8AN', identifier='ru.isoftdv.CrossStitcher', executablePath='<DVTFilePath:0x600018416140:'/Users/valerydubovoy/Library/Developer/Xcode/Archives/2024-01-17/CrossStitcher 17.01.2024, 22.29.xcarchive/Products/Applications/CrossStitcher.app/CrossStitcher'>', hardenedRuntime='0'>'> to: /var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/entitlements~~~yGrruN
+2024-01-17 12:30:13 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '9BE7992DCBB75A167443DF807F754E8EFD0FA4A7' '--entitlements' '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/entitlements~~~yGrruN' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app'
+2024-01-17 12:30:13 +0000  /var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app: replacing existing signature
+2024-01-17 12:30:13 +0000  /var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app: signed app bundle with Mach-O thin (arm64) [ru.isoftdv.CrossStitcher]
+2024-01-17 12:30:13 +0000  /usr/bin/codesign exited with 0
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionZipODRItemStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCreateIPAStep
+2024-01-17 12:30:13 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root' '/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Packages/CrossStitcher.ipa'
+2024-01-17 12:30:13 +0000  >>> Copying /var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root 
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/_CodeSignature/CodeResources ... 
+2024-01-17 12:30:13 +0000  5905 bytes for ./Payload/CrossStitcher.app/_CodeSignature/CodeResources
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/CrossStitcher ... 
+2024-01-17 12:30:13 +0000  226864 bytes for ./Payload/CrossStitcher.app/CrossStitcher
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/UINavigationController-9NR-me-pi4.nib ... 
+2024-01-17 12:30:13 +0000  2739 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/UINavigationController-9NR-me-pi4.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/UINavigationController-agH-hz-d8F.nib ... 
+2024-01-17 12:30:13 +0000  2225 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/UINavigationController-agH-hz-d8F.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/Lie-KO-poV-view-uAp-TE-Tv3.nib ... 
+2024-01-17 12:30:13 +0000  1197 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/Lie-KO-poV-view-uAp-TE-Tv3.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/UIViewController-Lie-KO-poV.nib ... 
+2024-01-17 12:30:13 +0000  2486 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/UIViewController-Lie-KO-poV.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/Fcx-cN-bOh-view-A6u-ed-3zg.nib ... 
+2024-01-17 12:30:13 +0000  5005 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/Fcx-cN-bOh-view-A6u-ed-3zg.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/hZF-Z6-C4C-view-PaB-Iz-ge7.nib ... 
+2024-01-17 12:30:13 +0000  9066 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/hZF-Z6-C4C-view-PaB-Iz-ge7.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/Info.plist ... 
+2024-01-17 12:30:13 +0000  429 bytes for ./Payload/CrossStitcher.app/Base.lproj/Main.storyboardc/Info.plist
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2024-01-17 12:30:13 +0000  1197 bytes for ./Payload/CrossStitcher.app/Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2024-01-17 12:30:13 +0000  896 bytes for ./Payload/CrossStitcher.app/Base.lproj/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/Base.lproj/LaunchScreen.storyboardc/Info.plist ... 
+2024-01-17 12:30:13 +0000  258 bytes for ./Payload/CrossStitcher.app/Base.lproj/LaunchScreen.storyboardc/Info.plist
+copying file ./Payload/CrossStitcher.app/embedded.mobileprovision ... 
+2024-01-17 12:30:13 +0000  14246 bytes for ./Payload/CrossStitcher.app/embedded.mobileprovision
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/CrossStitcher.momd/CrossStitcher.mom ... 
+2024-01-17 12:30:13 +0000  3101 bytes for ./Payload/CrossStitcher.app/CrossStitcher.momd/CrossStitcher.mom
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/CrossStitcher.momd/VersionInfo.plist ... 
+2024-01-17 12:30:13 +0000  255 bytes for ./Payload/CrossStitcher.app/CrossStitcher.momd/VersionInfo.plist
+copying file ./Payload/CrossStitcher.app/CrossStitcher.momd/CrossStitcher.omo ... 
+2024-01-17 12:30:13 +0000  5576 bytes for ./Payload/CrossStitcher.app/CrossStitcher.momd/CrossStitcher.omo
+copying file ./Payload/CrossStitcher.app/Info.plist ... 
+2024-01-17 12:30:13 +0000  1487 bytes for ./Payload/CrossStitcher.app/Info.plist
+2024-01-17 12:30:13 +0000  copying file ./Payload/CrossStitcher.app/PkgInfo ... 
+8 bytes for ./Payload/CrossStitcher.app/PkgInfo
+2024-01-17 12:30:13 +0000  /usr/bin/ditto exited with 0
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionAppStoreInformationStep
+2024-01-17 12:30:13 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
+2024-01-17 12:30:13 +0000  IDEDistributionItem init <DVTFilePath:0x6000187cf170:'/var/folders/m_/mx906fj11518gjd8t1djsq200000gn/T/XcodeDistPipeline.~~~fEJ5Wl/Root/Payload/CrossStitcher.app'>
+2024-01-17 12:30:13 +0000  Processing step: IDEDistributionCreateManifestStep

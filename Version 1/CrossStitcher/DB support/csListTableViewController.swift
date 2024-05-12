@@ -17,7 +17,6 @@ class csListTableViewController: FetchedResultsTableViewController {
         didSet { updateUI() }
     }
  */
-    //override var fetchedResultController: NSFetchedResultsController<CrossStitch>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,42 +48,12 @@ class csListTableViewController: FetchedResultsTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "crossStitch cell", for: indexPath) as! CrossStitchListViewCell
 
         if let object = fetchedResultController?.object(at: indexPath) as? CrossStitch {
-            cell.configureWith(name: object.name, imageData: object.imageData)
+            cell.configureWith(name: object.name, imageData: object.images?.previewData)
         }
 
         return cell
     }
     
-    private func updateUI() {
-        /*
-        if let context = container?.viewContext {
-            let request: NSFetchRequest<CrossStitch> = CrossStitch.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(
-                                        key: "indexField",
-                                        ascending: true,
-                                        selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
-                                        ),
-                                       NSSortDescriptor(
-                                       key: "name",
-                                       ascending: true,
-                                       selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
-                                       )
-                                    ]
-            //request.predicate = NSPredicate(format: "any tweets.text contains[c] %@", mention!)
-            fetchedResultController = NSFetchedResultsController<CrossStitch>(
-                fetchRequest: request,
-                managedObjectContext: context,
-                sectionNameKeyPath: "indexField",
-                cacheName: nil
-                ) as? NSFetchedResultsController<NSFetchRequestResult>
-            
-            fetchedResultController?.delegate = self
-            try? fetchedResultController?.performFetch()
-            tableView.reloadData()
-        }
-        */
-    }
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -119,7 +88,7 @@ class csListTableViewController: FetchedResultsTableViewController {
             if let cell = sender as? UITableViewCell,  let indexPath = self.tableView.indexPath(for: cell){
                 
                 let object = fetchedResultController?.object(at: indexPath) as! CrossStitch?
-                if (object?.schemaData) == nil {
+                if (object?.images?.schemaData) == nil {
                     return false
                 }
             }

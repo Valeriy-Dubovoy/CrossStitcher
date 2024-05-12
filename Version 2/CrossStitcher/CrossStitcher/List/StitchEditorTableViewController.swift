@@ -57,14 +57,21 @@ class StitchEditorTableViewController: UITableViewController, SchemaViewControll
 
         do {
             try (UIApplication.shared.delegate as? AppDelegate)?.saveContext(inBackground: false)
-            navigationController?.dismiss(animated: true, completion: {})
+            //navigationController?.dismiss(animated: true, completion: {})
+            // close window
+            cancelButtonPressed(sender)
         } catch {
             UniversalSystem.showAlertMessage("Saving error", withTitle: "Error", inView: self)
         }
     }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
-        navigationController?.dismiss(animated: true, completion: {})
+        if let vc = presentingViewController {
+            vc.dismiss(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+        //navigationController?.dismiss(animated: true, completion: {})
     }
     
     

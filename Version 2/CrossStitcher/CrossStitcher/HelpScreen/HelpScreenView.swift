@@ -90,7 +90,7 @@ struct HelpDescriptionView: View {
         return blocks
     }
     
-    func extractImageName( imageTag: String ) -> String {
+    func extractImageName( imageTag: String ) -> String? {
         // tag = <img="imageName">
         let startIndex = imageTag.index( imageTag.startIndex, offsetBy: 6)
         let endIndex = imageTag.index( imageTag.endIndex, offsetBy: -2)

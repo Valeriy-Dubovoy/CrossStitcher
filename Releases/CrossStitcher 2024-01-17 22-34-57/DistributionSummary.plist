@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CrossStitcher.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>9BE7992DCBB75A167443DF807F754E8EFD0FA4A7</string>
+				<key>dateExpires</key>
+				<string>10.12.2024</string>
+				<key>type</key>
+				<string>Apple Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>3ZE6RDM8AN.ru.isoftdv.CrossStitcher</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>3ZE6RDM8AN</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>CrossStitcher.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>7f5b12f4-ed6d-49e7-8555-5db4fff6b043</string>
+				<key>dateExpires</key>
+				<string>10.12.2024</string>
+				<key>name</key>
+				<string>CStitcher AH</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>3ZE6RDM8AN</string>
+				<key>name</key>
+				<string>Valery Dubovoy</string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.1</string>
+		</dict>
+	</array>
+</dict>
+</plist>
